@@ -18,7 +18,7 @@
         this.set = util.extend( {}, Particle.configDefault, options );
 
         //设置事件元素对象
-        if( !util.isElem( this.set.eventElem ) || this.set.eventElem !== document ){
+        if( !util.isElem( this.set.eventElem ) && this.set.eventElem !== document ){
             this.set.eventElem = this.c;
         }
         //移动鼠标点X,Y坐标

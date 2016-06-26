@@ -86,7 +86,8 @@
                 }else {
                     set[ attr ] = [];
                     //将crest: 2, 转换成crest: [2, 2, 2]
-                    if( typeof val === 'number' || typeof val === 'boolean' ){
+                    if( typeof val === 'number' || typeof val === 'boolean' ||
+                        typeof val === 'string' ){
                         for( var i = 0; i < num; i++ ){
                             if( attr === 'offsetTop' || attr === 'crest' ){
                                 val = scale( val, ch );
@@ -201,7 +202,6 @@
                 }
                 cxt.restore();
             });
-            console.log( this )
             this.requestAnimationFrame();
         }
     };

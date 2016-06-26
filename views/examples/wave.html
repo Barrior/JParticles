@@ -8,97 +8,135 @@
             <div id="open" class="btn btn-success">开启/Open</div>
             <div id="pause" class="btn btn-success">暂停/Pause</div>
             <div class="model">
-                <h5 class="caption"><a id="备注" href="#备注">备注：</a></h5>
-                <div class="content">
-                    本案例参考QQ电话的UI设计，网易云音乐也有这样的效果，大家可以参考这些实际用例。
-                </div>
-            </div>
-            <div class="model">
                 <h5 class="caption"><a id="源代码" href="#源代码">查看源代码：</a></h5>
                 <div class="content">
                     <pre>
 <code class="prettyprint normal-text">
     new Particleground.wave( '#demo', {
-    dis: 90,
-    r: 100
+        color: ['rgba(0, 190, 112, .5)', 'rgba(0, 190, 112, .7)', 'rgba(0, 190, 112, .9)'],
+        num: 3,
+        //三条线段依次的宽度
+        lineWidth: [.5, .7,.9],
+        //三条线段依次的右偏移值
+        offsetLeft: [2, 1, 0],
+        //三条线段都向上偏移容器高度的0.75倍
+        offsetTop: .75,
+        //三条线段依次的波峰高度
+        crest: [8, 12, 16],
+        //三条线段都只有两个波峰（波纹）
+        rippleNum: 2,
+        speed: .07
     });
 </code>
                     </pre>
                 </div>
             </div>
-            <div id="demo-2" style="height: 20rem;"></div>
+            <div class="model">
+                <h5 class="caption"><a id="水切面" href="#水切面">水切面效果：</a></h5>
+            </div>
+            <div id="demo-2" style="height: 20rem; border: 1px solid #ccc;"></div>
+            <div class="model">
+                <h5 class="caption"><a id="源代码2" href="#源代码2">查看源代码：</a></h5>
+                <div class="content">
+                    <pre>
+<code class="prettyprint normal-text">
+    new Particleground.wave( '#demo-2', {
+        num: 1,
+        color: '#27C9E5',
+        crest: 8,
+        offsetTop: .75,
+        rippleNum: 3,
+        //绘制成区域
+        area: true,
+        //线条的边框
+        stroke: false,
+        speed: .07
+    });
+</code>
+                    </pre>
+                </div>
+            </div>
             <div class="model">
                 <h5 class="caption"><a id="参数" href="#参数">API参数配置</a></h5>
                 <div class="content">
                     <table class="table table-bordered-inner table-striped">
                         <thead>
                         <tr>
-                            <th>名称</th>
-                            <th>默认值</th>
-                            <th>类型</th>
+                            <th width="100">名称</th>
+                            <th width="100">默认值</th>
+                            <th width="150">类型</th>
                             <th>描述</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
                             <td>opacity</td>
-                            <td>.6</td>
+                            <td>1</td>
                             <td>number</td>
                             <td>全局透明度</td>
                         </tr>
                         <tr>
                             <td>color</td>
-                            <td>[] 即随机色</td>
-                            <td>array</td>
-                            <td>设置颜色数组，粒子则按设置的颜色数组随机</td>
-                        </tr>
-                        <tr>
-                            <td>speed</td>
-                            <td>1</td>
-                            <td>number</td>
-                            <td>粒子运动速度</td>
+                            <td>[]</td>
+                            <td>array 或 string</td>
+                            <td>
+                                ● 线条的颜色，空数组则随机取色，或传入依次定义线段的颜色的数组，数组里的颜色比线条个数少，系统即随机生成颜色对应赋值。<br>
+                                ● 传入一个颜色字符串，则所有线条应用此颜色。（以下有些雷同参数如lineWidth等，同理，不再赘述）
+                            </td>
                         </tr>
                         <tr>
                             <td>num</td>
-                            <td>.12</td>
-                            <td>number</td>
-                            <td>粒子个数，默认为容器的0.12倍，传入[0, 1)显示容器相应倍数的值，或传入具体个数[1, +∞)</td>
-                        </tr>
-                        <tr>
-                            <td>max</td>
-                            <td>2.4</td>
-                            <td>number</td>
-                            <td>粒子最大半径</td>
-                        </tr>
-                        <tr>
-                            <td>min</td>
-                            <td>.6</td>
-                            <td>number</td>
-                            <td>粒子最小半径</td>
-                        </tr>
-                        <tr>
-                            <td>dis</td>
-                            <td>130</td>
-                            <td>number</td>
-                            <td>两个点之间相连接的最大距离</td>
+                            <td>null</td>
+                            <td>null 或 number</td>
+                            <td>线条的个数，null表示随机个</td>
                         </tr>
                         <tr>
                             <td>lineWidth</td>
-                            <td>.2</td>
-                            <td>number</td>
-                            <td>连接线段的宽度</td>
+                            <td>[]</td>
+                            <td>array 或 number</td>
+                            <td>线条的宽度，空数组则随机(.2,2)的宽度，或依次定义线段的宽度</td>
                         </tr>
                         <tr>
-                            <td>r</td>
-                            <td>160</td>
-                            <td>number</td>
-                            <td>范围越大，连接的点越多</td>
+                            <td>offsetLeft</td>
+                            <td>[]</td>
+                            <td>array 或 number</td>
+                            <td>线条的横向偏移值，(0, 1)表示偏移波长的倍数，0 & [1, +∞)表示具体数值</td>
                         </tr>
                         <tr>
-                            <td>eventElem</td>
-                            <td>null</td>
-                            <td>null 或 element</td>
-                            <td>触发移动事件的元素，null为canvas自身，或传入原生元素对象，如document</td>
+                            <td>offsetTop</td>
+                            <td>[]</td>
+                            <td>array 或 number</td>
+                            <td>线条中点到元素顶部的距离，(0, 1)表示容器高度的倍数，0 & [1, +∞)表示具体数值</td>
+                        </tr>
+                        <tr>
+                            <td>crest</td>
+                            <td>[]</td>
+                            <td>array 或 number</td>
+                            <td>波峰数值，(0, 1)表示容器高度的倍数，0 & [1, +∞)表示具体数值</td>
+                        </tr>
+                        <tr>
+                            <td>rippleNum</td>
+                            <td>[]</td>
+                            <td>array 或 number</td>
+                            <td>波纹个数，即正弦周期个数</td>
+                        </tr>
+                        <tr>
+                            <td>speed</td>
+                            <td>[]</td>
+                            <td>array 或 number</td>
+                            <td>运动速度</td>
+                        </tr>
+                        <tr>
+                            <td>area</td>
+                            <td>false</td>
+                            <td>boolean</td>
+                            <td>是否绘制成区域图，类似水切面的效果</td>
+                        </tr>
+                        <tr>
+                            <td>stroke</td>
+                            <td>true</td>
+                            <td>boolean</td>
+                            <td>是否绘制边框，绘制边框即我们看到的线条</td>
                         </tr>
                         <tr>
                             <td>resize</td>
