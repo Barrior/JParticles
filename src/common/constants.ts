@@ -6,7 +6,7 @@ export const objectCtorString = funcToString.call(Object)
 export const defaultCanvasWidth = 485
 export const defaultCanvasHeight = 300
 export const isIE8 = /msie\s8.0/i.test(navigator.userAgent)
-export const isRuntimeSupported = Object.defineProperty && !isIE8
+export const isRuntimeSupported = !!Object.defineProperty && !isIE8
 
 // 正则列表
 export const regExp = {
