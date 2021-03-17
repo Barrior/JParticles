@@ -72,7 +72,7 @@ export default class Wave extends Mask<Options> {
   protected elements!: IElement[][]
 
   // 波长，每个周期(2π)在 Canvas 上的实际长度
-  private waveLength: number[] = []
+  protected waveLength: number[] = []
 
   constructor(
     selector: string | HTMLElement,
@@ -86,6 +86,7 @@ export default class Wave extends Mask<Options> {
    * 初始化数据和运行程序
    */
   protected init(): void {
+    this.ownResizeEvent()
     this.optionsNormalize()
     this.loadMaskImage()
     this.createDots()
@@ -94,7 +95,7 @@ export default class Wave extends Mask<Options> {
   /**
    * 标准化配置项
    */
-  private optionsNormalize(): void {
+  protected optionsNormalize(): void {
     stdProperties.forEach((property) => {
       let num = this.options.num
 
@@ -133,7 +134,9 @@ export default class Wave extends Mask<Options> {
    * 配置项缺省情况下对应的默认值
    * @param property 配置项属性
    */
-  private getOptionDefaultValue(property: ValueOf<typeof stdProperties>) {
+  protected getOptionDefaultValue(
+    property: ValueOf<typeof stdProperties>
+  ): StrNumBool {
     const { canvasWidth, canvasHeight } = this
     switch (property) {
       case 'lineColor':
@@ -163,11 +166,11 @@ export default class Wave extends Mask<Options> {
    * @param value 原始值
    * @param range 范围值
    */
-  private static getOptionProcessedValue(
+  protected static getOptionProcessedValue(
     property: ValueOf<typeof stdProperties>,
     value: StrNumBool,
     range: number
-  ) {
+  ): StrNumBool {
     if (
       property === 'offsetTop' ||
       property === 'offsetLeft' ||
@@ -181,7 +184,7 @@ export default class Wave extends Mask<Options> {
   /**
    * 创建波浪线条像素点
    */
-  private createDots() {
+  protected createDots(): void {
     const { canvasWidth, waveLength } = this
     let { num } = this.options
 
@@ -219,7 +222,7 @@ export default class Wave extends Mask<Options> {
   /**
    * 绘制波浪效果
    */
-  private drawWaves() {
+  protected drawWaves(): void {
     const { ctx, canvasWidth, canvasHeight, isPaused } = this
     const options = this.options as StdOptions & CommonConfig
 
@@ -264,11 +267,11 @@ export default class Wave extends Mask<Options> {
   /**
    * 窗口尺寸调整事件
    */
-  protected resizeEvent(): void {
+  protected ownResizeEvent(): void {
     const props = ['offsetLeft', 'offsetTop', 'crestHeight'] as const
     const options = this.options as StdOptions
 
-    super.resizeEvent((scaleX, scaleY) => {
+    this.onResize((scaleX, scaleY) => {
       // 调整选项缩放后的值
       props.forEach((prop) => {
         const scale = prop === 'offsetLeft' ? scaleX : scaleY
@@ -292,10 +295,10 @@ export default class Wave extends Mask<Options> {
    * @param property 选项属性
    * @param newValue 新值
    */
-  private updateComplexOptions(
+  protected updateComplexOptions(
     property: ComplexOptions,
     newValue?: ValueOf<Pick<Options, ComplexOptions>>
-  ) {
+  ): void {
     if (!newValue) return
 
     const scaleRange =
@@ -328,10 +331,10 @@ export default class Wave extends Mask<Options> {
    * @param property 选项属性
    * @param newValue 新值
    */
-  private updatePlainOptions(
+  protected updatePlainOptions(
     option: PlainOptions,
     newValue?: ValueOf<Pick<Options, PlainOptions>>
-  ) {
+  ): void {
     this.options[option] = newValue as never
     if (option === 'mask') {
       this.loadMaskImage()

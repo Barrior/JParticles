@@ -101,6 +101,7 @@ export default class Particle extends Base<Options> {
    * 初始化数据和运行程序
    */
   protected init(): void {
+    this.ownResizeEvent()
     this.optionsNormalize()
 
     if (this.options.range > 0) {
@@ -415,8 +416,8 @@ export default class Particle extends Base<Options> {
   /**
    * 窗口尺寸调整事件
    */
-  protected resizeEvent(): void {
-    super.resizeEvent((scaleX, scaleY) => {
+  private ownResizeEvent(): void {
+    this.onResize((scaleX, scaleY) => {
       if (this.options.range > 0) {
         this.positionX! *= scaleX
         this.positionY! *= scaleY

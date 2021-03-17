@@ -199,9 +199,7 @@ export default abstract class Base<Options> {
   /**
    * 窗口尺寸调整事件
    */
-  protected resizeEvent(
-    callback?: (this: this, scaleX: number, scaleY: number) => void
-  ): void {
+  protected resizeEvent(): void {
     if (this.options.resize) {
       // 窗口尺寸改变处理函数，对应调整（粒子）位置
       this.resizeHandler = () => {
@@ -223,10 +221,8 @@ export default abstract class Base<Options> {
           }
         })
 
-        // 自定义更多逻辑
-        if (isFunction(callback)) {
-          callback!.call(this, scaleX, scaleY)
-        }
+        // 触发窗口缩放事件，可自定义更多逻辑
+        this.eventEmitter.trigger(EVENT_NAMES.RESIZE, scaleX, scaleY)
 
         this.isPaused && this.draw()
       }
@@ -260,8 +256,18 @@ export default abstract class Base<Options> {
    * 当 Canvas 从 DOM 中移除时触发的销毁回调事件
    * @param args 参数集合
    */
-  onDestroy(...args: Function[]): this {
+  onDestroy(...args: (() => void)[]): this {
     this.eventEmitter.on(EVENT_NAMES.DESTROY, ...args)
+    // 让事件支持链式操作
+    return this
+  }
+
+  /**
+   * 窗口尺寸改变时触发的回调事件
+   * @param args 参数集合
+   */
+  onResize(...args: ((scaleX: number, scaleY: number) => void)[]): this {
+    this.eventEmitter.on(EVENT_NAMES.RESIZE, ...args)
     // 让事件支持链式操作
     return this
   }

@@ -14,9 +14,10 @@ export const regExp = {
   http: /^(https?|\/\/)/i,
 }
 
-// 事件名列表
+// 公共事件名列表
 export enum EVENT_NAMES {
   DESTROY = 'DESTROY',
+  RESIZE = 'RESIZE',
 }
 
 // 事件名列表
