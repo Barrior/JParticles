@@ -84,11 +84,12 @@
     const btn = instance.querySelector('.btn')
     const demo = instance.querySelector('.demo')
     const loading = new JParticles.WaveLoading(demo, {
+      num: 2,
       font: 'normal 900 30px Arial',
       textFormatter: '加载中...%d%',
-      color: '#ffc71f',
-      fillColor: '#FFC107',
-      offsetLeft: 3,
+      textColor: '#ffc71f',
+      fillColor: ['#FFC107', 'yellowgreen'],
+      offsetLeft: [0, 2],
       crestHeight: 8,
       crestCount: 3,
       speed: 0.25,
@@ -97,11 +98,12 @@
     })
 
     loading.onProgress(function(progress) {
+      console.log('progress: ', progress)
       // 如果进度大于 60，设置文本颜色为白色
       if (progress >= 60) {
         loading.setOptions({
-          color: '#fff',
-          offsetLeft: 20,
+          textColor: '#fff',
+          offsetLeft: [20, 25],
           crestHeight: 20,
           textFormatter: `loading...${Math.ceil(progress * 10)}‰`,
           speed: 0.2,
@@ -149,10 +151,18 @@
       resize: false,
     })
 
+    let startTime = Date.now()
+
     loading.onProgress(function(progress) {
-      if (progress >= 60) {
+      if (Date.now() - startTime > 1000) {
+        startTime = Date.now()
+        const reverse = Math.random() > 0.5
         loading.setOptions({
-          color: '#fff',
+          font: Math.random() > 0.5 ? '12px Arial' : '14px Arial',
+          textColor: reverse ? 'black' : 'yellow',
+          textFormatter: reverse ? 'loading %d%' : '加载中 %d%',
+          borderRadius: reverse ? '50%' : '',
+          opacity: Math.random() > 0.5 ? 0.5 : 1,
         })
       }
     })

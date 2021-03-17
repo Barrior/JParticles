@@ -45,19 +45,19 @@
 </div>
 
 <script>
-  // JParticles.utils.merge(JParticles.easing, {
-  //   easeOutBounce: function(x, t, b, c, d) {
-  //     if ((t /= d) < (1 / 2.75)) {
-  //       return c * (7.5625 * t * t) + b
-  //     } else if (t < (2 / 2.75)) {
-  //       return c * (7.5625 * (t -= (1.5 / 2.75)) * t + .75) + b
-  //     } else if (t < (2.5 / 2.75)) {
-  //       return c * (7.5625 * (t -= (2.25 / 2.75)) * t + .9375) + b
-  //     } else {
-  //       return c * (7.5625 * (t -= (2.625 / 2.75)) * t + .984375) + b
-  //     }
-  //   },
-  // });
+  Object.assign(JParticles.easing, {
+    easeOutBounce: function(x, t, b, c, d) {
+      if ((t /= d) < (1 / 2.75)) {
+        return c * (7.5625 * t * t) + b
+      } else if (t < (2 / 2.75)) {
+        return c * (7.5625 * (t -= (1.5 / 2.75)) * t + .75) + b
+      } else if (t < (2.5 / 2.75)) {
+        return c * (7.5625 * (t -= (2.25 / 2.75)) * t + .9375) + b
+      } else {
+        return c * (7.5625 * (t -= (2.625 / 2.75)) * t + .984375) + b
+      }
+    },
+  });
 
   (function() {
     const instance = document.getElementById('instance')
@@ -79,7 +79,7 @@
         // 如果进度大于 60，设置文本颜色为白色
         if (progress >= 60) {
           loading.setOptions({
-            color: '#fff',
+            textColor: '#fff',
           })
         }
       })

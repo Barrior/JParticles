@@ -1,36 +1,37 @@
-import { doublePi, EVENT_NAMES_WAVE_LOADING } from '@src/common/constants'
+import { EVENT_NAMES_WAVE_LOADING } from '@src/common/constants'
 import easing from '@src/common/easing'
-import Mask from '@src/common/mask'
 import { CommonConfig } from '@src/types/common-config'
-import { IElement, InputOptions, Options } from '@src/types/wave-loading'
-import { calcQuantity, isPlainObject } from '@src/utils'
+import { InputOptions, Options } from '@src/types/wave-loading'
+import { isPlainObject, isString, merge } from '@src/utils'
 
-// 仅允许 opacity 和以下选项动态设置
-const dynamicOptions = [
-  'opacity',
+import Wave, { ComplexOptions, PlainOptions } from './wave'
+
+const plainOptionsWL = [
   'font',
-  'color',
+  'textColor',
   'textFormatter',
-  'fillColor',
-  'offsetLeft',
-  'crestHeight',
-  'speed',
-  'mask',
+  'borderRadius',
 ] as const
 
-export type DynamicOptions = ValueOf<typeof dynamicOptions>
+export type PlainOptionsWL = ValueOf<typeof plainOptionsWL>
 
-export default class WaveLoading extends Mask<InputOptions> {
-  static defaultConfig: InputOptions = {
+export default class WaveLoading extends Wave {
+  static defaultConfig = ({
+    num: 1,
+
     // [font style][font weight][font size][font family]
     // 文本样式，同css一样，必须包含 [font size] 和 [font family]
-    font: 'normal 900 20px Arial',
+    font: 'normal 400 16px Arial',
 
     // 文本颜色
-    color: '#333',
+    textColor: '#333',
 
     // 进度文本模板
     textFormatter: 'loading...%d%',
+
+    fill: true,
+
+    line: false,
 
     // 填充的背景色
     fillColor: '#27C9E5',
@@ -58,11 +59,12 @@ export default class WaveLoading extends Mask<InputOptions> {
     // 加载过程的运动效果，
     // 目前支持匀速(linear)，先加速再减速(swing)，两种
     easing: 'swing',
-  }
+  } as unknown) as Options
+
+  // 进度阈值
+  static progressThreshold = 99.99
 
   protected readonly options!: Options & CommonConfig
-
-  protected elements!: IElement[]
 
   // 当前进度
   private progress = 0
@@ -80,56 +82,53 @@ export default class WaveLoading extends Mask<InputOptions> {
   private startTime?: number
 
   constructor(selector: string | HTMLElement, options?: Partial<InputOptions>) {
-    super(WaveLoading.defaultConfig, selector, options)
-    this.bootstrap()
+    super(selector, merge({}, WaveLoading.defaultConfig, options))
   }
 
   /**
    * 初始化数据和运行程序
    */
   protected init(): void {
-    this.canvas.style.borderRadius = this.options.borderRadius
-    this.options.offsetTop = this.canvasHeight
     this.halfCH = this.canvasHeight / 2
+
+    // WaveLoading methods
+    this.setOffsetTop(this.canvasHeight)
+    this.setCanvasStyle()
+
+    // Wave methods
+    this.ownResizeEvent()
     this.optionsNormalize()
-    this.createDots()
     this.loadMaskImage()
+    this.createDots()
+
+    // WaveLoading resize 事件需要放到 Wave 的后面
+    this.waveLoadingResizeEvent()
   }
 
   /**
-   * 选项参数标准化
+   * 设置 offsetTop 值
+   * @param top 高度值
    */
-  private optionsNormalize() {
-    const options = ['offsetLeft', 'crestHeight'] as const
-    options.forEach((property) => {
-      this.options[property] = calcQuantity(
-        this.options[property],
-        property === 'offsetLeft' ? this.canvasWidth : this.canvasHeight
-      )
-    })
-  }
-
-  /**
-   * 创建波浪线条像素点
-   */
-  private createDots() {
-    // 线条波长，每个周期(2π)在 canvas 上的实际长度
-    const waveLength = this.canvasWidth / this.options.crestCount
-
-    // 点的y轴步进
-    const step = doublePi / waveLength
-
-    // 一条线段所需的点
-    for (let i = 0; i <= this.canvasWidth; i++) {
-      this.elements.push({
-        x: i,
-        y: i * step,
+  private setOffsetTop(top: number): void {
+    const { offsetTop } = this.options
+    if (Array.isArray(offsetTop)) {
+      offsetTop.forEach((_item, i, arr) => {
+        arr[i] = top
       })
+    } else {
+      this.options.offsetTop = top
     }
   }
 
   /**
-   * 计算进度，绘制
+   * 设置画布 CSS 样式
+   */
+  private setCanvasStyle(): void {
+    this.canvas.style.borderRadius = this.options.borderRadius
+  }
+
+  /**
+   * 绘制入口：计算进度，绘制波纹等
    */
   protected draw(): void {
     this.eventEmitter.trigger(EVENT_NAMES_WAVE_LOADING.PROGRESS, this.progress)
@@ -152,44 +151,13 @@ export default class WaveLoading extends Mask<InputOptions> {
     this.calcOffsetTop()
     this.clearCanvasAndSetGlobalAttrs()
 
+    // 调用 Wave 方法
     this.renderMaskMode(() => {
-      this.drawWave()
+      this.drawWaves()
     })
+
+    // 调用 WaveLoading 方法
     this.drawText()
-  }
-
-  /**
-   * 绘制波纹
-   */
-  private drawWave() {
-    const { ctx, canvasWidth, canvasHeight } = this
-    const {
-      crestHeight,
-      offsetLeft,
-      offsetTop,
-      fillColor,
-      speed,
-    } = this.options
-
-    ctx.save()
-
-    ctx.beginPath()
-    this.elements.forEach((dot, i) => {
-      ctx[i ? 'lineTo' : 'moveTo'](
-        dot.x,
-
-        // y = A sin ( ωx + φ ) + h
-        crestHeight * Math.sin(dot.y + offsetLeft) + offsetTop
-      )
-      dot.y -= speed
-    })
-    ctx.lineTo(canvasWidth, canvasHeight)
-    ctx.lineTo(0, canvasHeight)
-    ctx.closePath()
-
-    ctx.fillStyle = fillColor
-    ctx.fill()
-    ctx.restore()
   }
 
   /**
@@ -197,7 +165,9 @@ export default class WaveLoading extends Mask<InputOptions> {
    */
   private drawText() {
     const { ctx, canvasWidth, halfCH, progress } = this
-    const { font, textFormatter, color } = this.options
+    const { font, textFormatter, textColor } = this.options
+
+    if (!isString(textFormatter) || !textFormatter) return
 
     // 替换文本模板真实值
     const text = textFormatter.replace(/%d/g, String(Math.floor(progress)))
@@ -209,7 +179,7 @@ export default class WaveLoading extends Mask<InputOptions> {
     const x = (canvasWidth - textWidth) / 2
 
     ctx.textBaseline = 'middle'
-    ctx.fillStyle = color
+    ctx.fillStyle = textColor
     ctx.font = font
     ctx.fillText(text, x, halfCH)
     ctx.restore()
@@ -227,7 +197,7 @@ export default class WaveLoading extends Mask<InputOptions> {
     }
 
     // 悬停 99% 时，跳出计算，减少性能损耗
-    if (this.progress >= 99.99) return
+    if (this.progress >= WaveLoading.progressThreshold) return
 
     if (!this.startTime) {
       this.startTime = Date.now()
@@ -252,8 +222,8 @@ export default class WaveLoading extends Mask<InputOptions> {
       )
 
       // 防止 progress 超出 100
-      if (this.progress >= 99.99) {
-        this.progress = 99.99
+      if (this.progress >= WaveLoading.progressThreshold) {
+        this.progress = WaveLoading.progressThreshold
       }
     }
   }
@@ -263,29 +233,31 @@ export default class WaveLoading extends Mask<InputOptions> {
    */
   private calcOffsetTop() {
     // 退出以提高性能
-    if (!this.isCompletedImmediately && this.progress === 99) return
-
-    if (this.progress === 100) {
-      this.options.offsetTop = -this.options.crestHeight
-    } else {
-      this.options.offsetTop = Math.ceil(
-        ((100 - this.progress) / 100) * this.canvasHeight +
-          this.options.crestHeight
-      )
+    if (
+      !this.isCompletedImmediately &&
+      this.progress >= WaveLoading.progressThreshold
+    ) {
+      return
     }
+
+    const maxCrestHeight = Math.max(...(this.options.crestHeight as number[]))
+
+    const top =
+      this.progress === 100
+        ? -maxCrestHeight
+        : Math.ceil(
+            ((100 - this.progress) / 100) * this.canvasHeight + maxCrestHeight
+          )
+
+    this.setOffsetTop(top)
   }
 
   /**
    * 窗口尺寸调整事件
    */
-  protected resizeEvent(): void {
-    super.resizeEvent((scaleX, scaleY) => {
-      const options = ['offsetLeft', 'offsetTop', 'crestHeight'] as const
-      options.forEach((option) => {
-        this.options[option] *= option === 'offsetLeft' ? scaleX : scaleY
-      })
+  protected waveLoadingResizeEvent(): void {
+    this.onResize(() => {
       this.halfCH = this.canvasHeight / 2
-
       if (this.progress === 100) {
         this.draw()
       }
@@ -295,33 +267,35 @@ export default class WaveLoading extends Mask<InputOptions> {
   /**
    * 方法：动态设置属性值
    */
-  setOptions(newOptions: Partial<Pick<Options, DynamicOptions>>): void {
-    if (!this.options || !isPlainObject(newOptions)) {
-      return
-    }
+  setOptions(
+    newOptions: Partial<
+      Pick<Options, ComplexOptions | PlainOptions | PlainOptionsWL>
+    >
+  ): void {
+    if (!this.isRunningSupported || !isPlainObject(newOptions)) return
+
+    // 调用 Wave 更新项
+    super.setOptions(newOptions)
 
     for (const property in newOptions) {
-      const prop = property as DynamicOptions
       if (
-        Object.hasOwnProperty.call(newOptions, prop) &&
-        dynamicOptions.indexOf(prop) !== -1
+        Object.hasOwnProperty.call(newOptions, property) &&
+        plainOptionsWL.indexOf(property as never) !== -1
       ) {
-        this.options[prop] = newOptions[prop] as never
-
-        if (prop === 'mask') {
-          this.loadMaskImage()
+        const newValue = newOptions[property as PlainOptionsWL]
+        this.options[property as PlainOptionsWL] = newValue as never
+        if (property === 'borderRadius') {
+          this.setCanvasStyle()
         }
       }
     }
-
-    this.optionsNormalize()
   }
 
   /**
    * 方法：让进度立即加载完成
    */
   done(): void {
-    if (this.options && !this.isCompletedImmediately) {
+    if (this.isRunningSupported && !this.isCompletedImmediately) {
       this.isCompletedImmediately = true
     }
   }
@@ -343,5 +317,5 @@ export default class WaveLoading extends Mask<InputOptions> {
   }
 }
 
-delete WaveLoading.prototype.pause
-delete WaveLoading.prototype.open
+delete (WaveLoading.prototype as any).pause
+delete (WaveLoading.prototype as any).open
