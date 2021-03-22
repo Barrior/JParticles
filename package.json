@@ -1,69 +1,88 @@
 {
-  "name": "JParticles",
-  "description": "A succinct, efficient, and lightweight Canvas plugin library for building some cool particle effects.",
-  "version": "2.0.1",
-  "main": "production/jparticles.all.js",
+  "name": "jparticles",
+  "description": "A concise, efficient, and lightweight Canvas library for building some cool particle effects.",
+  "version": "3.0.0",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "browser"
+  ],
   "scripts": {
-    "dev": "gulp --gulpfile ./bin/gulpfile.dev.js",
-    "build": "gulp --gulpfile ./bin/gulpfile.build.js && npm test",
-    "test": "npm run test:unit",
-    "test:unit": "nyc ava --verbose",
-    "test:e2e": "testcafe chrome,firefox,ie test/e2e/*.ts --speed 0.7",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "dev": "webpack-dev-server --config build/webpack.config.js --color",
+    "build": "node --experimental-top-level-await --es-module-specifier-resolution=node build/build",
+    "release": "node --experimental-top-level-await --es-module-specifier-resolution=node build/release",
+    "lint": "eslint . --ext .js,.ts",
+    "test": "yarn test:unit && yarn test:e2e",
+    "test:unit": "jest --verbose --maxWorkers 4",
+    "test:unit-watch": "yarn test:unit --watch",
+    "test:e2e": "cypress run",
+    "coverage": "yarn test --coverage",
+    "coverage:report": "yarn coverage --coverageReporters=text-lcov | coveralls"
   },
-  "ava": {
-    "require": [
-      "babel-register",
-      "babel-polyfill"
-    ],
-    "babel": {
-      "presets": [
-        "es2015",
-        "stage-0"
-      ]
-    },
-    "files": [
-      "test/unit/**/*.js"
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,js}": [
+      "eslint --fix"
     ]
   },
-  "devDependencies": {
-    "ava": "^0.20.0",
-    "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-polyfill": "^6.23.0",
-    "babel-preset-es2015": "^6.24.0",
-    "babel-preset-stage-0": "^6.22.0",
-    "browser-sync": "^2.18.8",
-    "coveralls": "^2.13.1",
-    "eslint": "^3.9.1",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-changed": "^2.0.0",
-    "gulp-concat": "^2.6.0",
-    "gulp-eslint": "^3.0.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-sourcemaps": "^2.5.0",
-    "gulp-uglify": "^2.1.2",
-    "gulp-zip": "^4.0.0",
-    "jsdom": "^11.1.0",
-    "nyc": "^11.0.3",
-    "testcafe": "^0.16.2",
-    "through2": "^2.0.3"
-  },
   "devEngines": {
-    "node": "7.1"
+    "node": ">=14.3.0"
   },
+  "resolutions": {
+    "tslib": "^2.1.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^9.1.2",
+    "@commitlint/config-conventional": "^9.1.2",
+    "@rollup/plugin-node-resolve": "^11.1.0",
+    "@typescript-eslint/eslint-plugin": "^3.7.0",
+    "@typescript-eslint/parser": "^3.7.0",
+    "chalk": "^4.1.0",
+    "chokidar": "^3.4.2",
+    "copy-webpack-plugin": "^6.0.3",
+    "eslint": "^7.5.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
+    "eslint-plugin-unused-imports": "^0.1.3",
+    "execa": "^5.0.0",
+    "html-webpack-plugin": "^4.3.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "lodash": "^4.17.21",
+    "ora": "^5.4.0",
+    "prettier": "^2.0.5",
+    "rollup": "^2.38.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.29.0",
+    "ts-loader": "^8.0.1",
+    "tslib": "^2.1.0",
+    "ttypescript": "^1.5.12",
+    "typescript": "^4.2.3",
+    "typescript-transform-paths": "^2.2.2",
+    "webpack": "^4.44.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "author": "Barrior",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Barrior/JParticles.git"
   },
-  "author": "Barrior",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Barrior/JParticles/issues"
   },
   "homepage": "jparticles.js.org",
   "keywords": [
     "JParticles",
+    "Particles",
     "Particle effects"
   ]
 }

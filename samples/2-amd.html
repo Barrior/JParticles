@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="instance">
+        <div class="demo"></div>
+        <div class="btn-box">
+            <button class="btn btn-primary" type="button" data-open>
+                open
+            </button>
+            <button class="btn btn-danger" type="button" data-pause>
+                pause
+            </button>
+        </div>
+    </div>
+
+    <script src="js/require.min.js"></script>
+    <script>
+
+        require(['../dist/jparticles'], function (jps) {
+            require(['../dist/particle'], function () {
+                var demo = new jps.Particle('#instance .demo');
+                document.addEventListener('click', function (event) {
+                    var target = event.target;
+                    if (target.getAttribute('data-open') !== null) {
+                        demo.open();
+                    } else if (target.getAttribute('data-pause') !== null) {
+                        demo.pause();
+                    }
+                });
+
+            });
+        });
+
+        /*require(['../dist/jparticles.all'], function (jps) {
+            var demo = new jps.Particle('#instance .demo');
+            document.addEventListener('click', function (event) {
+                var target = event.target;
+                if (target.getAttribute('data-open') !== null) {
+                    demo.open();
+                } else if (target.getAttribute('data-pause') !== null) {
+                    demo.pause();
+                }
+            });
+
+        });*/
+    </script>
+
+    <!--
+        如果使用标签加载 JParticles，但是页面也同时引用require这样的amd加载器，
+        需要将 JParticles 放在require加载之前，如下，或者使用amd的方式加载 JParticles，如上
+    -->
+    <!--
+    <script src="../dist/jparticles.js"></script>
+    <script src="../dist/particle.js"></script>
+    <script src="js/require.js"></script>
+    <script>
+        var demo = new JParticles.Particle( '#instance .demo' );
+        document.addEventListener( 'click', function( event ){
+            var target = event.target;
+            if( target.getAttribute('data-open') !== null ){
+                demo.open();
+            }else if( target.getAttribute('data-pause') !== null ){
+                demo.pause();
+            }
+        });
+    </script>
+    -->
+</body>
+</html>

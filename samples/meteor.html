@@ -50,7 +50,7 @@
         </div>
     </div>
 
-    <script src="../production/jparticles.all.js"></script>
+    <script src="../dist/jparticles.all.js"></script>
     <script src="js/event.js"></script>
     <script>
 
@@ -59,7 +59,7 @@
         for (let i = 1; i < 6; i++) {
             color.push(`rgba(255, 255, 255, ${i/10 + .2})`)
         }
-        new JParticles.particle('#demo-stars-bg', {
+        new JParticles.Particle('#demo-stars-bg', {
             range: 0,
             num: .04,
             maxSpeed: .03,
@@ -68,7 +68,7 @@
         });
 
         bind('#demo', function () {
-            return new JParticles.meteor('#demo', {
+            return new JParticles.Meteor('#demo', {
 
             });
         });

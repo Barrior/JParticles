@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Line Effect</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .box {
+      margin: 300px 0 100px 2000px;
+      position: relative;
+    }
+    #instance2 {
+      position: absolute;
+      left: 50%;
+      width: 600px;
+      height: 400px;
+      transform: translateX(-50%);
+    }
+    #instance3 {
+      position: fixed;
+      top: 50px;
+      left: 50px;
+      width: 450px;
+      height: 300px;
+    }
+    #instance2 .demo,
+    #instance3 .demo {
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+    }
+  </style>
+</head>
+<body>
+<div id="instance">
+  <div class="demo"></div>
+  <div class="btn-box">
+    <button class="btn btn-primary" type="button" data-open>
+      open
+    </button>
+    <button class="btn btn-danger" type="button" data-pause>
+      pause
+    </button>
+  </div>
+</div>
+
+<div class="box">
+  <div id="instance2">
+    <div class="demo"></div>
+    <div class="btn-box">
+      <button class="btn btn-primary" type="button" data-open>
+        open
+      </button>
+      <button class="btn btn-danger" type="button" data-pause>
+        pause
+      </button>
+    </div>
+  </div>
+
+  <div id="instance3">
+    <div class="demo"></div>
+    <div class="btn-box">
+      <button class="btn btn-primary" type="button" data-open>
+        open
+      </button>
+      <button class="btn btn-danger" type="button" data-pause>
+        pause
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="js/event.js"></script>
+<script>
+  bind('#instance', function() {
+    return new JParticles.Line('#instance .demo', {
+      color: ['rgba(0, 190, 112, .5)', 'rgba(0, 190, 112, .7)', 'rgba(0, 190, 112, .9)'],
+      reservedLines: 12,
+      maxDegree: 70,
+      minDegree: 70,
+    })
+  })
+
+  bind('#instance2', function() {
+    return new JParticles.Line('#instance2 .demo', {
+      maxDegree: 135,
+      minDegree: 0,
+    })
+  })
+
+  bind('#instance3', function() {
+    return new JParticles.Line('#instance3 .demo', {
+      numberOfCreations: 1,
+      removeOnOverflow: false,
+    })
+  })
+</script>
+</body>
+</html>

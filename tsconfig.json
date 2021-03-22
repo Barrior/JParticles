@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "outDir": "./lib/",
+    "rootDir": "./src/",
+    "declaration": true,
+
+    /* Module Resolution */
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@src/*": ["./src/*"]
+    },
+
+    /* Source Maps */
+    "sourceMap": true,
+
+    /* Strict Checks */
+    "strict": true,
+
+    /* Linter Checks */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Experimental Options */
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    /* Advanced Options */
+    "resolveJsonModule": true
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "compileOnSave": true
+}

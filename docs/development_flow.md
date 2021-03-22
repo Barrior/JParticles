@@ -1,33 +1,83 @@
-# 开发文档
+# 文档：开发 - 测试 - 正式包构建 - 发布
+
+## 开发
 
 ### 目录说明
 
-    bin:         构建任务
-    docs:        开发文档需知
-    samples:     样本目录（开发/测试）
-    test:        自动化测试目录
-    dev:         开发目录
-    production:  产品目录
+```bash
+build:         # 开发、构建任务
+docs:          # 项目、开发文档指南
+samples:       # 样本目录（开发/测试）
+src:           # 开发源代码
+test:          # 自动化测试
+```
 
 ### 分支说明
 
-    docs-1.x:    1.x API 存档
-    master:      开发分支
-	release:     发布代码到 GitHub Releases 的分支
-    npm-publish: 发布代码到 NPM 的分支
+```bash
+master:      # 主干分支（发布）
+dev:         # 开发分支，从这里拉取新分支开发
+test:        # 集成测试分支
+```
 
-### 流程
+### 流程说明
 
-##### 1、运行命令： `npm run dev`
-监听 `dev` 文件夹下 `js` 文件的改变，生成编译好的文件放进 `production` 目录。
+运行命令： `yarn dev`
 
-##### 2、命令会自动打开默认页面，对应 `samples` 文件夹下的 `html` 页面。
+- 命令使用 Webpack 生成实时预览的浏览器环境，自动打开包含所有示例样本的集合页面，对应 `samples` 目录下的所有 HTML 页面。
 
-- 当监听到文件改变，浏览器自动刷新。
-- 修改浏览器 `URL`，对应文件开发。
+- 命令监听 `src` 与 `samples` 目录文件变化，重新编译并热重载刷新页面。
 
-##### 3、修改 `package.json` 里的版本号，运行命令：`npm run build`
-将完成好的作品，压缩到 `production` 目录，并进行自动化测试。
 
+## 测试
+
+> 测试包含单元测试、E2E测试
+
+运行命令：`yarn test`
+
+1. 运行单元测试
+1. 运行 E2E 测试
+
+
+## 正式包构建
+
+> 正式包：发布到 npm 平台的包文件
+
+修改 `package.json` 版本号，运行命令：`yarn build`
+
+1. 运行自动化测试
+1. 生成以下包文件目录
+
+```bash
+.
+├── browser                            # IIFE, AMD
+│   ├── jparticles.all.js
+│   ├── jparticles.base.js
+│   ├── particle.js
+│   ├── snow.js
+│   └── ...
+├── lib                                # CMD, ES, TS
+│   ├── types
+│   │   ├── particle.d.ts
+│   │   ├── snow.d.ts
+│   │   └── ...
+│   ├── common
+│   │   ├── base.js
+│   │   └── ...
+│   ├── utils
+│   │   ├── index.js
+│   │   └── ...
+│   ├── index.js
+│   ├── particle.js
+│   ├── snow.js
+│   └── ...
+├── README.md
+├── package.json
+```
+
+
+## 发布
+
+运行命令：`yarn release`
 
 

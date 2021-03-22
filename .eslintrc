@@ -1,29 +1,75 @@
 {
-    "env": {
-        "browser": true,
-        "node": true
-    },
-    "parserOptions": {
-        "ecmaVersion": 7,
-        "sourceType": "module"
-    },
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "simple-import-sort",
+    "unused-imports"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended"
+  ],
+  "ignorePatterns": ["/browser/", "/lib/", "/dist/", "**/*.min.js"],
+  "rules": {
+    // Misc lint of ESLint
+    "no-console": "warn",
+    "lines-between-class-members": ["error", "always"],
+    "eqeqeq": ["error", "always"],
 
-    // http://eslint.cn/docs/rules/
-    // 0 = off, 1 = warn, 2 = error
-    // node_modules/eslint/conf/eslint.json
-    "extends": "eslint:recommended",
-    "rules": {
-        // 禁止条件表达式中出现赋值操作符
-        "no-cond-assign": 0,
-        // 禁止 case 语句落空
-        "no-fallthrough": 0,
-        // 禁止使用 空格 和 tab 混合缩进
-        "no-mixed-spaces-and-tabs": 1,
-        // 禁止使用 var 多次声明同一变量
-        "no-redeclare": 1,
-        // 禁用未声明的变量，除非它们在 /*global*/ 注释中被提到
-        "no-undef": 0,
-        // 禁用未使用的变量
-        "no-unused-vars": 0
-    }
+    // Misc lint of Typescript
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        "extendDefaults": true,
+        "types": {
+          "Function": false
+        }
+      }
+    ],
+
+    // Comments
+    "no-inline-comments": "error",
+    "line-comment-position": ["error", { "position": "above" }],
+    "lines-around-comment": [
+      "error",
+      {
+        "beforeBlockComment": true,
+        "beforeLineComment": false,
+        "allowBlockStart": true,
+        "allowClassStart": true,
+        "allowObjectStart": true,
+        "allowArrayStart": true
+      }
+    ],
+    "multiline-comment-style": ["error", "separate-lines"],
+    "spaced-comment": ["error", "always", { "block": { "balanced": true } }],
+
+    // Import sorting and remove unused imports
+    "import/first": "off",
+    "simple-import-sort/sort": "error",
+    "@typescript-eslint/no-unused-vars": "off",
+    "unused-imports/no-unused-imports-ts": "error",
+    "unused-imports/no-unused-vars-ts": [
+      "error",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
+    ]
+  }
 }

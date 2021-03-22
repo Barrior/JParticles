@@ -1,87 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="instance1">
-        <div class="demo"></div>
-        <div class="btn-box">
-            <button class="btn btn-primary" type="button" data-open>
-                open
-            </button>
-            <button class="btn btn-danger" type="button" data-pause>
-                pause
-            </button>
-        </div>
-    </div>
+<div id="instance1">
+  <div class="demo"></div>
+  <div class="btn-box">
+    <button class="btn btn-primary" type="button" data-open>
+      open
+    </button>
+    <button class="btn btn-danger" type="button" data-pause>
+      pause
+    </button>
+  </div>
+</div>
 
-    <div id="instance2">
-        <div class="demo"></div>
-        <div class="btn-box">
-            <button class="btn btn-primary" type="button" data-open>
-                open
-            </button>
-            <button class="btn btn-danger" type="button" data-pause>
-                pause
-            </button>
-        </div>
-    </div>
+<div id="instance2">
+  <div class="demo"></div>
+  <div class="btn-box">
+    <button class="btn btn-primary" type="button" data-open>
+      open
+    </button>
+    <button class="btn btn-danger" type="button" data-pause>
+      pause
+    </button>
+  </div>
+</div>
 
-    <div id="instance3">
-        <div class="demo"></div>
-        <div class="btn-box">
-            <button class="btn btn-primary" type="button" data-open>
-                open
-            </button>
-            <button class="btn btn-danger" type="button" data-pause>
-                pause
-            </button>
-        </div>
-    </div>
+<div id="instance3">
+  <div class="demo"></div>
+  <div class="btn-box">
+    <button class="btn btn-primary" type="button" data-open>
+      open
+    </button>
+    <button class="btn btn-danger" type="button" data-pause>
+      pause
+    </button>
+  </div>
+</div>
 
-    <script src="../production/jparticles.js"></script>
-    <script src="../production/wave.js"></script>
-    <script src="js/event.js"></script>
-    <script>
-        bind('#instance1', function () {
-            return new JParticles.wave('#instance1 .demo');
-        });
+<script src="js/event.js"></script>
+<script>
+  bind('#instance1', function() {
+    return new JParticles.Wave('#instance1 .demo')
+  })
 
-        bind('#instance2', function () {
-            return new JParticles.wave('#instance2 .demo', {
-                num: 3,
-                // 三条线依次的边框颜色
-                lineColor: ['rgba(0, 190, 112, .5)', 'rgba(0, 190, 112, .7)', 'rgba(0, 190, 112, .9)'],
-                // 三条线依次的边框宽度
-                lineWidth: [.5, .7, .9],
-                // 三条线依次距左的偏移值
-                offsetLeft: [2, 1, 0],
-                // 三条线都向下偏移容器高度的0.75倍，或者写成这样 [ 0.75, 0.75, 0.75 ]
-                offsetTop: .75,
-                // 三条线依次的波峰高度
-                crestHeight: [8, 12, 16],
-                // 三条线都只有两个波峰(波纹)
-                rippleNum: 2,
-                // 三条线的运动速度都为0.07
-                speed: .07
-            });
-        });
+  bind('#instance2', function() {
+    return new JParticles.Wave('#instance2 .demo', {
+      num: 3,
+      // 三条线依次的边框颜色
+      lineColor: ['rgba(0, 190, 112, .5)', 'rgba(0, 190, 112, .7)', 'rgba(0, 190, 112, .9)'],
+      // 三条线依次的边框宽度
+      lineWidth: [.5, .7, .9],
+      // 三条线依次距左的偏移值
+      offsetLeft: [2, 1, 0],
+      // 三条线都向下偏移容器高度的0.75倍，等价于 [ 0.75, 0.75, 0.75 ]
+      offsetTop: .75,
+      // 三条线依次的波峰高度
+      crestHeight: [8, 12, 16],
+      // 三条线都只有两个波峰，等价于 [2, 2, 2]
+      crestCount: 2,
+      // 三条线的运动速度都为0.07，等价于 [0.07, 0.07, 0.07]
+      speed: .07,
+    })
+  })
 
-        bind('#instance3', function () {
-            return new JParticles.wave('#instance3 .demo', {
-                num: 1,
-                fillColor: '#27C9E5',
-                crestHeight: 8,
-                offsetTop: .75,
-                rippleNum: 3,
-                fill: true,
-                line: false,
-                speed: .07
-            });
-        });
-    </script>
+  bind('#instance3', function() {
+    return new JParticles.Wave('#instance3 .demo', {
+      num: 1,
+      fillColor: '#27C9E5',
+      crestHeight: 8,
+      offsetTop: .75,
+      crestCount: 3,
+      fill: true,
+      line: false,
+      speed: .07,
+    })
+  })
+</script>
 </body>
 </html>

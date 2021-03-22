@@ -1,36 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="css/style.css">
-    <style>
-        #instance .demo {
-            background: url(./img/merry_christmas.jpg) no-repeat;
-            background-size: 100% 100%;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    [id*="instance"] .demo {
+      background: url(./img/merry_christmas.jpg) no-repeat;
+      background-size: 100% 100%;
+    }
+  </style>
 </head>
 <body>
-    <div id="instance">
-        <div class="demo"></div>
-        <div class="btn-box">
-            <button class="btn btn-primary" type="button" data-open>
-                open
-            </button>
-            <button class="btn btn-danger" type="button" data-pause>
-                pause
-            </button>
-        </div>
-    </div>
+<div id="instance">
+  <div class="demo"></div>
+  <div class="btn-box">
+    <button class="btn btn-primary" type="button" data-open>
+      open
+    </button>
+    <button class="btn btn-danger" type="button" data-pause>
+      pause
+    </button>
+  </div>
+</div>
 
-    <script src="../production/jparticles.js"></script>
-    <script src="../production/snow.js"></script>
-    <script src="js/event.js"></script>
-    <script>
-        bind('#instance', function () {
-            return new JParticles.snow('#instance .demo');
-        });
-    </script>
+<div id="instance2">
+  <div class="demo"></div>
+  <div class="btn-box">
+    <button class="btn btn-primary" type="button" data-open>
+      open
+    </button>
+    <button class="btn btn-danger" type="button" data-pause>
+      pause
+    </button>
+  </div>
+</div>
+
+<script src="js/event.js"></script>
+<script>
+  bind('#instance', function() {
+    return new JParticles.Snow('#instance .demo')
+  })
+
+  bind('#instance2', function() {
+    return new JParticles.Snow('#instance2 .demo', {
+      swing: false,
+    })
+  })
+</script>
 </body>
 </html>

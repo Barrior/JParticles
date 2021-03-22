@@ -1,10 +1,14 @@
-function bind(id, run) {
-    var effect = run();
-    var btnBox = document.querySelector(id).querySelector('.btn-box');
-    btnBox.querySelector('[data-open]').onclick = function () {
-        effect.open();
-    };
-    btnBox.querySelector('[data-pause]').onclick = function () {
-        effect.pause();
-    };
+function bind(selector, exec) {
+  const effect = exec()
+  const btnBox = document.querySelector(selector).querySelector('.btn-box')
+
+  btnBox.querySelector('[data-open]').addEventListener('click', function () {
+    effect.open()
+  })
+
+  btnBox.querySelector('[data-pause]').addEventListener('click', function () {
+    effect.pause()
+  })
 }
+
+window.bind = bind

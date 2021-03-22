@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    #instance1 .demo {
+      width: 350px;
+      height: 350px;
+    }
+
+    #instance2 .demo {
+      width: 492px;
+      height: 480px;
+    }
+
+    #instance3 .demo {
+      width: 600px;
+      height: 300px;
+    }
+  </style>
+</head>
+<body>
+<div id="instance1">
+  <div class="demo"></div>
+  <div class="btn-box">
+    <button class="btn btn-primary" type="button" data-open>
+      open
+    </button>
+    <button class="btn btn-danger" type="button" data-pause>
+      pause
+    </button>
+  </div>
+</div>
+
+<div id="instance2">
+  <div class="demo"></div>
+  <div class="btn-box">
+    <button class="btn btn-primary" type="button" data-open>
+      open
+    </button>
+    <button class="btn btn-danger" type="button" data-pause>
+      pause
+    </button>
+    <button id="loading" class="btn btn-primary" type="button" data-loading>
+      Loading
+    </button>
+  </div>
+</div>
+
+<div id="instance3">
+  <div class="demo"></div>
+  <div class="btn-box">
+    <button class="btn btn-primary" type="button" data-open>
+      open
+    </button>
+    <button class="btn btn-danger" type="button" data-pause>
+      pause
+    </button>
+  </div>
+</div>
+
+<script src="js/event.js"></script>
+<script>
+  bind('#instance1', function() {
+    return new JParticles.Wave('#instance1 .demo', {
+      num: 1,
+      fillColor: 'rgba(20, 200, 255, 1)',
+      crestHeight: 8,
+      offsetTop: 0.5,
+      crestCount: 2,
+      fill: true,
+      line: false,
+      speed: 0.1,
+      // 遮罩
+      mask: 'https://upload.wikimedia.org/wikipedia/commons/2/29/GitHub_logo_2013.svg',
+    })
+  })
+
+  bind('#instance2', function() {
+    let offsetTop = 300
+
+    const effect = new JParticles.Wave('#instance2 .demo', {
+      num: 2,
+      fillColor: 'rgba(0, 0, 0, 0.15)',
+      crestHeight: 8,
+      offsetTop,
+      offsetLeft: [0, 1.5],
+      crestCount: 2,
+      fill: true,
+      line: false,
+      speed: 0.2,
+      mask: 'https://img20.360buyimg.com/ling/jfs/t1/171417/27/9991/212205/60433cc3E4d2daac2/bc52ead60a2f5cc4.png',
+      maskMode: 'ghost'
+    })
+
+    let isLoading = false
+
+    document.querySelector('#loading').addEventListener('click', function() {
+      if (isLoading) return
+      offsetTop = 300
+      rise()
+    })
+
+    function rise() {
+      isLoading = true
+      setTimeout(() => {
+        offsetTop -= 1
+        effect.setOptions({ offsetTop })
+
+        if (offsetTop > -1) {
+          rise()
+        } else {
+          isLoading = false
+        }
+      }, 30)
+    }
+
+    return effect
+  })
+
+  bind('#instance3', function() {
+    const effect = new JParticles.Wave('#instance3 .demo', {
+      num: 1,
+      fillColor: 'rgba(20, 200, 255, 1)',
+      crestHeight: 8,
+      offsetTop: 0.5,
+      crestCount: 2,
+      fill: true,
+      line: false,
+      speed: 0.1,
+
+      // 遮罩
+      mask: 'https://img30.360buyimg.com/ling/jfs/t1/92499/15/4615/9505/5de86318E776b30d4/dd02ceff50fcbe7f.png',
+      maskMode: 'ghost'
+    })
+
+    setInterval(() => {
+      effect.setOptions({
+        maskMode: Math.random() > 0.5 ? 'ghost' : 'normal'
+      })
+    }, 1000)
+
+    return effect
+  })
+</script>
+</body>
+</html>

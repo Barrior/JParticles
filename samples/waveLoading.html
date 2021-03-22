@@ -1,205 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-    <link rel="stylesheet" href="css/style.css">
-    <style>
-        [id^="instance"] .demo {
-            width: 100%;
-            height: 100%;
-        }
-        #instance,
-        #instance2 {
-            width: 60%;
-            height: 400px;
-            margin: 0 auto 200px;
-        }
-        #instance canvas,
-        #instance2 canvas {
-            border-radius: 0 !important;
-        }
-        #instance .btn {
-            border-color: #FFC107;
-            background-color: #FFC107;
-        }
-        #instance3 {
-            width: 120px;
-            height: 120px;
-            margin: 50px auto;
-            position: fixed;
-            top: 0;
-            left: 20px;
-        }
-        #instance3 .demo {
-            border-color: #ececec;
-            border-radius: 50%;
-        }
-        @media all and (max-width: 1000px) {
-            #instance2 .demo {
-                height: 300px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    [id^="instance"] .demo {
+      width: 100%;
+      height: 100%;
+    }
+
+    #instance,
+    #instance2 {
+      width: 60%;
+      height: 400px;
+      margin: 0 auto 200px;
+    }
+
+    #instance canvas,
+    #instance2 canvas {
+      border-radius: 0 !important;
+    }
+
+    #instance .btn {
+      border-color: #FFC107;
+      background-color: #FFC107;
+    }
+
+    #instance2 {
+      position: relative;
+    }
+
+    #progress {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    #instance3 {
+      width: 120px;
+      height: 120px;
+      margin: 50px auto;
+      position: fixed;
+      top: 0;
+      left: 20px;
+    }
+
+    #instance3 .demo {
+      border-color: #ececec;
+      border-radius: 50%;
+    }
+
+    @media all and (max-width: 1000px) {
+      #instance2 .demo {
+        height: 300px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div id="instance">
-        <div class="demo"></div>
-        <div class="btn-box">
-            <button class="btn btn-primary" type="button" data-open>
-                done
-            </button>
-        </div>
-    </div>
+<div id="instance">
+  <div class="demo"></div>
+  <div class="btn-box">
+    <button class="btn btn-primary" type="button" data-open>
+      done
+    </button>
+  </div>
+</div>
 
-    <div id="instance2">
-        <div class="demo"></div>
-        <div class="btn-box">
-            <button class="btn btn-primary" type="button" data-open>
-                done
-            </button>
-        </div>
-    </div>
+<div id="instance2">
+  <div class="demo"></div>
+  <div id="progress">loading 0%</div>
+  <div class="btn-box">
+    <button class="btn btn-primary" type="button" data-open>
+      done
+    </button>
+  </div>
+</div>
 
-    <div id="instance3">
-        <div class="demo"></div>
-        <div class="btn-box">
-            <button class="btn btn-primary" type="button" data-open>
-                done
-            </button>
-        </div>
-    </div>
+<div id="instance3">
+  <div class="demo"></div>
+  <div class="btn-box">
+    <button class="btn btn-primary" type="button" data-open>
+      done
+    </button>
+  </div>
+</div>
 
-    <script src="../production/jparticles.js"></script>
-    <script src="../production/wave_loading.js"></script>
-    <script src="js/event.js"></script>
-    <script>
-        (function () {
-            var instance = document.getElementById('instance');
-            var btn = instance.querySelector('.btn');
-            var demo = instance.querySelector('.demo');
-            var loading = new JParticles.waveLoading(demo, {
+<script src="js/event.js"></script>
+<script>
+  (function() {
+    const instance = document.getElementById('instance')
+    const btn = instance.querySelector('.btn')
+    const demo = instance.querySelector('.demo')
+    const loading = new JParticles.WaveLoading(demo, {
+      num: 2,
+      font: 'normal 900 30px Arial',
+      textFormatter: '加载中...%d%',
+      textColor: '#ffc71f',
+      fillColor: ['#FFC107', 'yellowgreen'],
+      offsetLeft: [0, 2],
+      crestHeight: 8,
+      crestCount: 3,
+      speed: 0.25,
+      duration: 3000,
+      easing: 'linear',
+    })
 
-                // [font style][font weight][font size][font family]
-                // 文本样式，同css一样，必须包含 [font size] 和 [font family]
-                font: 'normal 900 30px Arial',
+    loading.onProgress(function(progress) {
+      console.log('progress: ', progress)
+      
+      loading.setOptions({
+        textFormatter: `loading...${parseInt(progress * 10)}‰`,
+      })
 
-                // 小字体样式，如：“%”
-                smallFont: 'normal 900 24px Arial',
+      // 如果进度大于 60，设置文本颜色为白色
+      if (progress >= 60) {
+        loading.setOptions({
+          textColor: '#fff',
+          offsetLeft: [20, 25],
+          crestHeight: 20,
+          speed: 0.2,
+        })
+      }
+    })
 
-                // 小字体相对于中点向下的偏移值，
-                // 细节的处理，为了让显示更好看。
-                smallFontOffsetTop: 2,
-
-                // 文本颜色
-                color: '#ffc71f',
-
-                // 填充的背景色
-                fillColor: '#FFC107',
-
-                // 线条横向偏移值，距离canvas画布左边的偏移值
-                // (0, 1)表示容器宽度的倍数，0 & [1, +∞)表示具体数值
-                offsetLeft: 3,
-
-                // 波峰高度，(0, 1)表示容器高度的倍数，0 & [1, +∞)表示具体数值
-                crestHeight: 8,
-
-                // 波纹个数，即正弦周期个数
-                rippleNum: 2,
-
-                // 波浪的运动速度
-                speed: .35,
-
-                // 加载到 99% 的时长，单位毫秒(ms)
-                // 用时越久，越慢加载到 99%。
-                duration: 3000,
-
-                // 加载过程的运动效果，
-                // 目前支持匀速(linear)，先加速再减速(swing)，两种
-                easing: 'linear'
-            });
-
-            loading.onProgress(function (progress) {
-
-                console.log('test done: ' + progress);
-
-                // 如果进度大于 60，设置文本颜色为白色
-                if (progress >= 60) {
-                    loading.setOptions({
-                        color: '#fff'
-                    });
-                }
-
-                // 返回字符串，样式为 font。
-                // #instance2 演示返回对象
-                return '正在加载...' + Math.ceil(progress) + '%';
-            });
-
-            btn.addEventListener('click', function () {
-
-                // 主动完成，加速到达 100%
-                loading.done();
-            });
-        })();
+    // 主动完成，加速到达 100%
+    btn.addEventListener('click', function() {
+      loading.done()
+    })
+  })();
 
 
-        (function () {
-            var instance = document.getElementById('instance2');
-            var btn = instance.querySelector('.btn');
-            var demo = instance.querySelector('.demo');
-            var loading = new JParticles.waveLoading(demo, {
-                crestHeight: 8,
-                rippleNum: 2
-            });
+  (function() {
+    const instance = document.getElementById('instance2')
+    const $progress = instance.querySelector('#progress')
+    const btn = instance.querySelector('.btn')
+    const demo = instance.querySelector('.demo')
+    const loading = new JParticles.WaveLoading(demo, {
+      textFormatter: '',
+      crestHeight: 8,
+      crestCount: 2,
+      resize: false,
+    })
 
-            loading.onProgress(function (progress) {
-                if (progress >= 99 && progress < 100) {
-                    progress = 999;
-                } else if (progress >= 100) {
-                    progress = 1000;
-                } else {
-                    progress = Math.ceil(progress * 9);
-                }
+    loading.onProgress(function(val) {
+      $progress.innerHTML = `loading ${Math.floor(val)}%`
+    })
 
-                // 返回对象，text 对应样式为：font，
-                // smallText 对应样式为：smallFont，smallFontOffsetTop
-                return {
-                    text: 'loading...' + progress,
-                    smallText: '‰'
-                }
-            });
+    btn.addEventListener('click', function() {
+      loading.done()
+    })
+  })();
 
-            btn.addEventListener('click', function () {
+  // 小字体测试
+  (function() {
+    const instance = document.getElementById('instance3')
+    const btn = instance.querySelector('.btn')
+    const demo = instance.querySelector('.demo')
+    const loading = new JParticles.WaveLoading(demo, {
+      font: '14px Arial',
+      speed: 0.2,
+      crestCount: 1,
+      resize: false,
+    })
 
-                // 主动完成，加速到达 100%
-                loading.done();
-            });
-        })();
+    let startTime = Date.now()
 
-        // 默认值测试，使用于正常的页面加载(page loading)
-        (function () {
-            var instance = document.getElementById('instance3');
-            var btn = instance.querySelector('.btn');
-            var demo = instance.querySelector('.demo');
-            var loading = new JParticles.waveLoading(demo);
+    loading.onProgress(function(progress) {
+      if (Date.now() - startTime > 1000) {
+        startTime = Date.now()
+        const reverse = Math.random() > 0.5
+        loading.setOptions({
+          font: Math.random() > 0.5 ? '12px Arial' : '14px Arial',
+          textColor: reverse ? 'black' : 'yellow',
+          textFormatter: reverse ? 'loading %d%' : '加载中 %d%',
+          borderRadius: reverse ? '50%' : '',
+          opacity: Math.random() > 0.5 ? 0.5 : 1,
+        })
+      }
+    })
 
-            loading.onProgress(function (progress) {
-
-                // 如果进度大于 60，设置文本颜色为白色
-                if (progress >= 60) {
-                    loading.setOptions({
-                        color: '#fff'
-                    });
-                }
-            });
-
-            btn.addEventListener('click', function () {
-
-                // 主动完成
-                loading.done();
-            });
-        })();
-    </script>
+    btn.addEventListener('click', function() {
+      loading.done()
+    })
+  })()
+</script>
 </body>
 </html>
