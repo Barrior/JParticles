@@ -1,4 +1,4 @@
-function bind(selector, exec) {
+window.bind = function (selector, exec) {
   const effect = exec()
   const btnBox = document.querySelector(selector).querySelector('.btn-box')
 
@@ -11,4 +11,8 @@ function bind(selector, exec) {
   })
 }
 
-window.bind = bind
+window.loadImage = function ({ src, width, height }, callback) {
+  const image = new Image(width, height)
+  image.addEventListener('load', () => callback(image))
+  image.src = src
+}

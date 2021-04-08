@@ -1,17 +1,17 @@
 import Base from '@src/common/base'
 import { CommonConfig } from '@src/types/common-config'
-import { loadImage, upperFirst } from '@src/utils'
+import { isString, loadImage, upperFirst } from '@src/utils'
 
 export type modeMethodNames = 'modeNormal' | 'modeGhost'
 
 export default abstract class Mask<Options> extends Base<Options> {
   // 遮罩图像对象
-  protected maskImage?: HTMLImageElement
+  protected maskImage?: CanvasImageSource
 
   // 扩展 mask 相关属性
   protected readonly options!: Options &
     CommonConfig & {
-      mask?: string
+      mask?: string | CanvasImageSource
       maskMode?: 'normal' | 'ghost'
     }
 
@@ -25,20 +25,24 @@ export default abstract class Mask<Options> extends Base<Options> {
    * @TODO 加载错误重试
    */
   protected loadMaskImage(): void {
-    const maskUrl = this.options.mask
+    const mask = this.options.mask
 
-    if (!maskUrl) return
+    if (!mask) return
 
-    // 取缓存图像
-    if (this.completedMap[maskUrl]) {
-      this.maskImage = this.completedMap[maskUrl]
-      return
+    if (isString(mask)) {
+      // 取缓存图像
+      if (this.completedMap[mask as string]) {
+        this.maskImage = this.completedMap[mask as string]
+        return
+      }
+
+      loadImage(mask as string, (image) => {
+        this.completedMap[mask as string] = image
+        this.maskImage = image
+      })
+    } else {
+      this.maskImage = mask as CanvasImageSource
     }
-
-    loadImage(maskUrl, (image) => {
-      this.completedMap[maskUrl] = image
-      this.maskImage = image
-    })
   }
 
   protected renderMaskMode(mainDrawing: () => void): void {
@@ -93,14 +97,15 @@ export default abstract class Mask<Options> extends Base<Options> {
     if (!this.maskImage) return
 
     const { ctx, canvasWidth, canvasHeight, maskImage } = this
-    const { naturalWidth, naturalHeight } = maskImage
-    const imgScale = naturalWidth / naturalHeight
+    const originWidth = maskImage.width as number
+    const originHeight = maskImage.height as number
+    const imgScale = originWidth / originHeight
 
     // 图像填充算法: contain 模式
-    let width = naturalWidth > canvasWidth ? canvasWidth : naturalWidth
-    let height = naturalHeight > canvasHeight ? canvasHeight : naturalHeight
+    let width = originWidth > canvasWidth ? canvasWidth : originWidth
+    let height = originHeight > canvasHeight ? canvasHeight : originHeight
 
-    if (naturalWidth > naturalHeight) {
+    if (originWidth > originHeight) {
       height = width / imgScale
     } else {
       width = height * imgScale
@@ -114,8 +119,8 @@ export default abstract class Mask<Options> extends Base<Options> {
       maskImage,
       0,
       0,
-      naturalWidth,
-      naturalHeight,
+      originWidth,
+      originHeight,
       x,
       y,
       width,

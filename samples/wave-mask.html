@@ -74,51 +74,59 @@
       line: false,
       speed: 0.1,
       // 遮罩
-      mask: 'https://upload.wikimedia.org/wikipedia/commons/2/29/GitHub_logo_2013.svg',
+      mask: 'https://raw.githubusercontent.com/Barrior/assets/main/github-logo-text.svg',
     })
   })
 
-  bind('#instance2', function() {
-    let offsetTop = 300
-
-    const effect = new JParticles.Wave('#instance2 .demo', {
-      num: 2,
-      fillColor: 'rgba(0, 0, 0, 0.15)',
-      crestHeight: 8,
-      offsetTop,
-      offsetLeft: [0, 1.5],
-      crestCount: 2,
-      fill: true,
-      line: false,
-      speed: 0.2,
-      mask: 'https://img20.360buyimg.com/ling/jfs/t1/171417/27/9991/212205/60433cc3E4d2daac2/bc52ead60a2f5cc4.png',
-      maskMode: 'ghost'
-    })
-
-    let isLoading = false
-
-    document.querySelector('#loading').addEventListener('click', function() {
-      if (isLoading) return
-      offsetTop = 300
-      rise()
-    })
-
-    function rise() {
-      isLoading = true
-      setTimeout(() => {
-        offsetTop -= 1
-        effect.setOptions({ offsetTop })
-
-        if (offsetTop > -1) {
-          rise()
-        } else {
-          isLoading = false
-        }
-      }, 30)
-    }
-
-    return effect
+  JParticles.utils.loadImage('https://raw.githubusercontent.com/Barrior/assets/main/chrome-logo.svg', (image) => {
+    console.log('loadImage: ', image)
+    console.log('loadImage naturalWidth: ', image.naturalWidth)
+    console.log('loadImage width: ', image.width)
+    console.log('loadImage naturalHeight: ', image.naturalHeight)
+    console.log('loadImage height: ', image.height)
+    setTimeout(() => {
+      createInstance2(image)
+    }, 1000)
   })
+
+  function createInstance2(image) {
+    bind('#instance2', function () {
+      let offsetTop = 300
+
+      const effect = new JParticles.Wave('#instance2 .demo', {
+        num: 2,
+        fillColor: 'rgba(0, 0, 0, 0.15)',
+        crestHeight: 8,
+        offsetTop,
+        offsetLeft: [0, 1.5],
+        crestCount: 2,
+        fill: true,
+        line: false,
+        speed: 0.2,
+        mask: image,
+        maskMode: 'ghost'
+      })
+
+      document.querySelector('#loading').addEventListener('click', function () {
+        offsetTop = 300
+        rise()
+      })
+
+      function rise() {
+        setTimeout(() => {
+          offsetTop -= 1
+          effect.setOptions({ offsetTop })
+
+          if (offsetTop > -1) {
+            rise()
+          }
+        }, 30)
+      }
+
+      return effect
+    })
+  }
+  
 
   bind('#instance3', function() {
     const effect = new JParticles.Wave('#instance3 .demo', {

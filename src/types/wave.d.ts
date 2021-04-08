@@ -33,8 +33,8 @@ export interface ComOptions {
   // 运动速度，默认随机 [.1, .4)
   speed: number | number[]
 
-  // 遮罩，图片 URL 地址或 Base64 格式
-  mask?: string
+  // 遮罩：图片 URL 地址、 Base64 格式、canvas 图像源
+  mask?: string | CanvasImageSource
 
   // 遮罩模式，默认 normal
   maskMode?: 'normal' | 'ghost'
