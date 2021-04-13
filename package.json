@@ -1,7 +1,7 @@
 {
   "name": "jparticles",
   "description": "A concise, efficient, and lightweight Canvas library for building some cool particle effects.",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
