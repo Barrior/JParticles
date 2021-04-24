@@ -5,7 +5,14 @@ export const funcToString = Function.prototype.toString
 export const objectCtorString = funcToString.call(Object)
 export const defaultCanvasWidth = 485
 export const defaultCanvasHeight = 300
-export const isIE8 = /msie\s8.0/i.test(navigator.userAgent)
+
+export const ua = navigator.userAgent
+export const isIE8 = /msie\s8.0/i.test(ua)
+export const isIE = /msie/i.test(ua)
+export const isEdge = /edge/i.test(ua)
+export const isSafari = /safari/i.test(ua) && !/chrome/i.test(ua)
+
+export const isFilterSupported = !isIE && !isEdge && !isSafari
 export const isRuntimeSupported = !!Object.defineProperty && !isIE8
 
 // 正则列表

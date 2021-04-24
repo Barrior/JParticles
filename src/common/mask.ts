@@ -1,6 +1,6 @@
 import Base from '@src/common/base'
 import { CommonConfig } from '@src/types/common-config'
-import { isString, loadImage, upperFirst } from '@src/utils'
+import { grayscale, isString, loadImage, upperFirst } from '@src/utils'
 
 export type modeMethodNames = 'modeNormal' | 'modeGhost'
 
@@ -76,10 +76,21 @@ export default abstract class Mask<Options> extends Base<Options> {
    */
   private modeGhost(mainDrawing: () => void): void {
     // 绘制灰色背景
-    this.ctx.save()
-    this.ctx.filter = 'grayscale(100%)'
-    this.drawMaskImage()
-    this.ctx.restore()
+    const originWidth = this.maskImage!.width as number
+    const originHeight = this.maskImage!.height as number
+    const grayImage = grayscale(this.maskImage!)
+    const { x, y, width, height } = this.getMaskImagePosition()
+    this.ctx.drawImage(
+      grayImage,
+      0,
+      0,
+      originWidth,
+      originHeight,
+      x,
+      y,
+      width,
+      height
+    )
 
     // 设置图形组合模式，将效果映射到遮罩内
     this.ctx.globalCompositeOperation = 'source-atop'
@@ -87,18 +98,58 @@ export default abstract class Mask<Options> extends Base<Options> {
     // 绘制原始图案
     mainDrawing()
     this.ctx.clip()
-    this.drawMaskImage()
+    this.ctx.drawImage(
+      this.maskImage!,
+      0,
+      0,
+      originWidth,
+      originHeight,
+      x,
+      y,
+      width,
+      height
+    )
   }
 
   /**
-   * 绘制遮罩图案，遮罩图像填充模式为 contain 且居中
+   * 绘制遮罩图案
    */
-  protected drawMaskImage(): void {
-    if (!this.maskImage) return
+  protected drawMaskImage() {
+    const {
+      x,
+      y,
+      width,
+      height,
+      originWidth,
+      originHeight,
+    } = this.getMaskImagePosition()
+    this.ctx.drawImage(
+      this.maskImage!,
+      0,
+      0,
+      originWidth,
+      originHeight,
+      x,
+      y,
+      width,
+      height
+    )
+  }
 
-    const { ctx, canvasWidth, canvasHeight, maskImage } = this
-    const originWidth = maskImage.width as number
-    const originHeight = maskImage.height as number
+  /**
+   * 遮罩图像填充模式为 contain 且居中
+   */
+  protected getMaskImagePosition(): {
+    x: number
+    y: number
+    width: number
+    height: number
+    originWidth: number
+    originHeight: number
+  } {
+    const { canvasWidth, canvasHeight, maskImage } = this
+    const originWidth = maskImage!.width as number
+    const originHeight = maskImage!.height as number
     const imgScale = originWidth / originHeight
 
     // 图像填充算法: contain 模式
@@ -115,16 +166,6 @@ export default abstract class Mask<Options> extends Base<Options> {
     const x = (canvasWidth - width) / 2
     const y = (canvasHeight - height) / 2
 
-    ctx.drawImage(
-      maskImage,
-      0,
-      0,
-      originWidth,
-      originHeight,
-      x,
-      y,
-      width,
-      height
-    )
+    return { x, y, width, height, originWidth, originHeight }
   }
 }
