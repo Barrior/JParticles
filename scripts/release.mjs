@@ -12,20 +12,22 @@ import logger from './logger'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const rootDir = path.resolve(__dirname, '..')
-const buildDir = path.resolve(__dirname)
+const scriptsDir = path.resolve(__dirname)
 const packageFile = path.resolve(rootDir, 'package.json')
 const pkg = JSON.parse(fs.readFileSync(packageFile))
+const registry = 'https://registry.npmjs.org'
 
 // @flow:
-//   1. Check the branch and status of the release.
-//   2. Run code lint and automated testing.
-//   3. Ask for release version and edit the package.json file.
-//   4. Generate changelog?
-//   5. Commit version changes. [chore(release): v3.0.0-beta.0]
-//   6. Generate git tag.
-//   7. Build and publish to NPM.
-//   8. Push to remote repository.
-//   9. Clean up remnants.
+//   - Check the branch and status of the release.
+//   - Run code lint and automated testing.
+//   - Check login status of NPM.
+//   - Ask for release version and edit the package.json file.
+//   - Generate changelog?
+//   - Commit version changes. [chore(release): v3.0.0-beta.0]
+//   - Generate git tag.
+//   - Build and publish to NPM.
+//   - Push to remote repository?
+//   - Clean up remnants.
 
 // Discard changes when emit error
 process.on('uncaughtException', () => {
@@ -37,6 +39,8 @@ checkBranchAndStatus()
 // @TODO: Run code lint and automated testing
 // await execa.command('yarn lint && yarn test --verbose=false', { stdio: 'inherit' })
 
+await checkLoginStatus()
+
 const answers = await askReleaseVersion()
 
 // Build files
@@ -45,19 +49,39 @@ await execa.command('yarn build', { stdio: 'inherit' })
 // Update NPM docs
 fs.writeFileSync(
   path.resolve(rootDir, 'README.md'),
-  fs.readFileSync(path.resolve(buildDir, 'README_NPM.md'))
+  fs.readFileSync(path.resolve(scriptsDir, 'README_NPM.md'))
 )
 
-await execa.command('yarn login', { stdio: 'inherit' })
 await execa.command(
-  `yarn publish --new-version ${answers.version} --tag ${answers.tag}`,
+  `yarn publish --registry ${registry} --new-version ${answers.version} --tag ${answers.tag}`,
   { stdio: 'inherit' }
 )
 await execa.command('git checkout .', { stdio: 'inherit' })
 
-// ******************************
-// ******  Function Block  ******
-// ******************************
+// *************************************
+// ******  Function Block Divider ******
+// *************************************
+/**
+ * Check login status of NPM.
+ */
+async function checkLoginStatus() {
+  try {
+    const res = await execa.command(`npm whoami --registry ${registry}`)
+    const account = 'barrior'
+    if (res.stdout !== account) {
+      logger.info(`Incorrect logined user, please use \`${account}\` account.`)
+      throw Error('Incorrect logined user')
+    }
+  } catch (_err) {
+    await execa.command(`npm login --registry ${registry}`, {
+      stdio: 'inherit',
+    })
+  }
+}
+
+/**
+ * Check the branch and status of the release.
+ */
 function checkBranchAndStatus() {
   const branchName = execa.commandSync('git symbolic-ref HEAD --short').stdout
   if (branchName !== 'master') {
