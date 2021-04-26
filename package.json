@@ -9,9 +9,10 @@
     "browser"
   ],
   "scripts": {
+    "node:exp": "node --experimental-top-level-await --es-module-specifier-resolution=node",
     "dev": "webpack-dev-server --config scripts/webpack.config.js --color",
-    "build": "node --experimental-top-level-await --es-module-specifier-resolution=node scripts/build",
-    "release": "node --experimental-top-level-await --es-module-specifier-resolution=node scripts/release",
+    "build": "yarn node:exp scripts/build",
+    "release": "yarn node:exp scripts/release",
     "lint": "eslint . --ext .js,.ts",
     "test": "yarn test:unit && yarn test:e2e",
     "test:unit": "jest --verbose --maxWorkers 4",
