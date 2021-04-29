@@ -1,4 +1,5 @@
 import Base from '@src/common/base'
+import Cache from '@src/common/cache'
 import { CommonConfig } from '@src/types/common-config'
 import { grayscale, isString, loadImage, upperFirst } from '@src/utils'
 
@@ -19,6 +20,8 @@ export default abstract class Mask<Options> extends Base<Options> {
   private completedMap: {
     [key: string]: HTMLImageElement
   } = {}
+
+  protected grayImageCache = new Cache()
 
   /**
    * 加载遮罩图像
