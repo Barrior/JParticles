@@ -48,5 +48,6 @@ export function loadImage(
   const image = new Image()
   image.addEventListener('load', () => successCallback(image))
   image.addEventListener('error', (e) => errorCallback?.(e))
+  image.crossOrigin = 'Anonymous'
   image.src = url
 }

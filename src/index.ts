@@ -10,15 +10,15 @@ import Wave from './wave'
 import WaveLoading from './wave-loading'
 
 export {
-  Line,
-  Particle,
-  Snow,
-  Wave,
-  WaveLoading,
   commonConfig,
   easing,
   Events,
+  Line,
+  Particle,
+  Snow,
   utils,
+  Wave,
+  WaveLoading,
 }
 
 export default {

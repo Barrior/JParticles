@@ -36,8 +36,9 @@ process.on('uncaughtException', () => {
 
 checkBranchAndStatus()
 
-// @TODO: Run code lint and automated testing
-// await execa.command('yarn lint && yarn test --verbose=false', { stdio: 'inherit' })
+// Run code lint and automated testing
+await execa.command('yarn lint', { stdio: 'inherit' })
+await execa.command('yarn test:unit --verbose=false', { stdio: 'inherit' })
 
 await checkLoginStatus()
 

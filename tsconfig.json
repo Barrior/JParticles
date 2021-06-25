@@ -3,7 +3,7 @@
     "target": "es5",
     "module": "commonjs",
     "outDir": "./lib/",
-    "rootDir": "./src/",
+    "rootDir": ".",
     "declaration": true,
 
     /* Module Resolution */
@@ -11,7 +11,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "@src/*": ["./src/*"]
+      "@src/*": ["./src/*"],
+      "@test/*": ["./test/*"]
     },
 
     /* Source Maps */
@@ -34,7 +35,8 @@
     "resolveJsonModule": true
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "test/**/*"
   ],
   "compileOnSave": true
 }

@@ -12,12 +12,12 @@
   "plugins": [
     "@typescript-eslint",
     "simple-import-sort",
+    "import",
     "unused-imports"
   ],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier/@typescript-eslint",
     "plugin:prettier/recommended"
   ],
   "ignorePatterns": ["/browser/", "/lib/", "/dist/", "**/*.min.js"],
@@ -57,9 +57,14 @@
     "multiline-comment-style": ["error", "separate-lines"],
     "spaced-comment": ["error", "always", { "block": { "balanced": true } }],
 
-    // Import sorting and remove unused imports
-    "import/first": "off",
-    "simple-import-sort/sort": "error",
+    // Import sorting
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error",
+
+    // Remove unused imports
     "@typescript-eslint/no-unused-vars": "off",
     "unused-imports/no-unused-imports-ts": "error",
     "unused-imports/no-unused-vars-ts": [
@@ -71,5 +76,14 @@
         "argsIgnorePattern": "^_"
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": "**/*.js",
+      "rules": {
+        "simple-import-sort/imports": "off",
+        "import/order": ["error", { "newlines-between": "always" }]
+      }
+    }
+  ]
 }

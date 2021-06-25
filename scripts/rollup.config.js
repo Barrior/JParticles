@@ -1,5 +1,6 @@
-import nodeResolve from '@rollup/plugin-node-resolve'
 import path from 'path'
+
+import nodeResolve from '@rollup/plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
 import typescript from 'rollup-plugin-typescript2'
 
@@ -38,6 +39,7 @@ const common = {
           module: 'ESNext',
           rootDir: '.',
         },
+        exclude: ['test/**/*'],
       },
     }),
     nodeResolve(),

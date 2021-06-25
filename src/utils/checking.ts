@@ -18,6 +18,13 @@ export function isFunction(value: any): boolean {
 }
 
 /**
+ * 检测 value 是否为数组
+ */
+export function isArray(value: any): boolean {
+  return Array.isArray(value)
+}
+
+/**
  * 检测 value 是否为纯对象，即 {} 或 new Object() 创建的对象
  * 参见 https://lodash.com/docs/4.17.15#isPlainObject
  */

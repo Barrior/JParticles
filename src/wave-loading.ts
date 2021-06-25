@@ -16,7 +16,7 @@ const plainOptionsWL = [
 export type PlainOptionsWL = ValueOf<typeof plainOptionsWL>
 
 export default class WaveLoading extends Wave {
-  static defaultConfig = ({
+  static defaultConfig = {
     num: 1,
 
     // [font style][font weight][font size][font family]
@@ -59,7 +59,7 @@ export default class WaveLoading extends Wave {
     // 加载过程的运动效果，
     // 目前支持匀速(linear)，先加速再减速(swing)，两种
     easing: 'swing',
-  } as unknown) as Options
+  } as unknown as Options
 
   // 进度阈值
   static progressThreshold = 99.99

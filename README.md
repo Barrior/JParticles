@@ -1,5 +1,8 @@
 <h1>
   JParticles ·
+  <a href="https://circleci.com/gh/Barrior/JParticles">
+    <img src="https://circleci.com/gh/Barrior/JParticles.svg?style=shield" alt="CircleCI">
+  </a>
   <a href="https://badge.fury.io/js/jparticles">
     <img src="https://badge.fury.io/js/jparticles.svg" alt="NPM version">
   </a>

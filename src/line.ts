@@ -48,14 +48,8 @@ export default class Line extends Base<Options> {
    * @param positionX 线条的 x 坐标，没有则随机
    */
   private createLines(number: number, positionX?: number): void {
-    const {
-      maxWidth,
-      minWidth,
-      maxSpeed,
-      minSpeed,
-      maxDegree,
-      minDegree,
-    } = this.options
+    const { maxWidth, minWidth, maxSpeed, minSpeed, maxDegree, minDegree } =
+      this.options
 
     while (number--) {
       this.elements.push({
@@ -90,11 +84,8 @@ export default class Line extends Base<Options> {
 
   protected draw(): void {
     const { ctx, canvasWidth, canvasHeight } = this
-    const {
-      removeOnOverflow,
-      overflowCompensation,
-      reservedLines,
-    } = this.options
+    const { removeOnOverflow, overflowCompensation, reservedLines } =
+      this.options
 
     this.clearCanvasAndSetGlobalAttrs()
 
