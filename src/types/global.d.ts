@@ -5,11 +5,6 @@
 declare function parseInt(s: string | number, radix?: number): number
 
 /**
- * 获取 interface 或（类）数组的值
- */
-type ValueOf<T> = T extends ArrayLike<any> ? T[number] : T[keyof T]
-
-/**
  * 添加 window 对象兼容属性
  */
 interface Window {

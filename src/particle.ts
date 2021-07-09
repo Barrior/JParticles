@@ -1,6 +1,7 @@
 import Base from '@src/common/base'
 import { doublePi, orientationSupport } from '@src/common/constants'
 import { IElement, Options } from '@src/types/particle'
+import { ValueOf } from '@src/types/utility-types'
 import {
   calcQuantity,
   isElement,
