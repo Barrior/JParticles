@@ -14,7 +14,7 @@ export const regExp = {
   trimAll: /\s/g,
 
   // 匹配 HTTP 协议
-  http: /^(https?|\/\/)/i,
+  http: /^(https?:\/\/|\/\/)/i,
 
   // 匹配 'star' 或 'star:5:0.5'
   shapeStar: /^star(:\d+:\d+(\.\d+)?)?$/,
