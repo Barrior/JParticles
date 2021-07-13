@@ -20,7 +20,7 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended"
   ],
-  "ignorePatterns": ["/browser/", "/lib/", "/dist/", "**/*.min.js"],
+  "ignorePatterns": ["/browser/", "/lib/", "/dist/", "*.min.js", "*.html", "*.md"],
   "rules": {
     // Misc lint of ESLint
     "no-console": "warn",
