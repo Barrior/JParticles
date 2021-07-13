@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+  </style>
+</head>
+<body>
+<div id="instance1">
+  <div class="demo"></div>
+  <div class="btn-box">
+    <button class="btn btn-primary" type="button" data-open>
+      open
+    </button>
+    <button class="btn btn-danger" type="button" data-pause>
+      pause
+    </button>
+  </div>
+</div>
+
+<div id="instance2">
+  <div class="demo"></div>
+  <div class="btn-box">
+    <button class="btn btn-primary" type="button" data-open>
+      open
+    </button>
+    <button class="btn btn-danger" type="button" data-pause>
+      pause
+    </button>
+  </div>
+</div>
+
+<script src="js/event.js"></script>
+<script>
+  bind('#instance1', function() {
+    return new JParticles.Particle('#instance1 .demo', {
+      num: 100,
+      maxR: 30,
+      minR: 30,
+      shape: [
+        'circle', 'triangle', 'star', 'star:4:0.5', 'star:30:0.5',
+        'https://img30.360buyimg.com/ling/jfs/t1/42528/38/16521/191828/60ecf690E1b8b016d/060dbecad0b8042a.png'
+      ],
+    })
+  })
+
+  bind('#instance2', function() {
+    return new JParticles.Particle('#instance2 .demo', {
+      // range为0，不连接线
+      range: 0,
+      num: 6,
+      maxR: 60,
+      minR: 60,
+      maxSpeed: 3,
+      minSpeed: 1,
+      shape: 'https://img13.360buyimg.com/ling/jfs/t1/180868/9/13865/158167/60ecf424E4af1ab15/edcc6d7cc9904efd.png'
+    })
+  })
+</script>
+</body>
+</html>
