@@ -31,12 +31,18 @@ export interface IElement {
   y: number
   // 水平速度
   vx: number
+  // 水平速度初始化时的固定值，用于缓动效果判断
+  vxFixed: number
   // 垂直速度，半径越大，垂直速度越快，这样比较有近快远慢的层次效果
   vy: number
   // 颜色值
   color: string
-  // 变换方向的时间
-  swingAt: number
   // 形状数据
   shape: ShapeData
+  // 是否处在变换方向中
+  isSwinging: boolean
+  // 变换方向的时间
+  swingAt: number
+  // 变换的值，用于更新 vx 值，视觉上呈现缓慢变动的效果
+  swingValue: number
 }
