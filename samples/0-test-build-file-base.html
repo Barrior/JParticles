@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+
+  </style>
+</head>
+<body>
+  <div id="instance">
+    <div class="demo"></div>
+    <div class="btn-box">
+      <button class="btn btn-primary" type="button" data-open>
+        open
+      </button>
+      <button class="btn btn-danger" type="button" data-pause>
+        pause
+      </button>
+    </div>
+  </div>
+
+  <div id="instance2">
+    <div class="demo"></div>
+    <div class="btn-box">
+      <button class="btn btn-primary" type="button" data-open>
+        open
+      </button>
+      <button class="btn btn-danger" type="button" data-pause>
+        pause
+      </button>
+    </div>
+  </div>
+
+  <script src="../browser/jparticles.base.js"></script>
+  <script src="../browser/particle.js"></script>
+  <script src="../browser/wave.js"></script>
+  <script>
+    new JParticles.Particle('#instance .demo')
+    new JParticles.Wave('#instance2 .demo')
+  </script>
+</body>
+</html>

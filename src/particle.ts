@@ -1,6 +1,7 @@
-import Base from '@src/common/base'
-import { doublePi, orientationSupport } from '@src/common/constants'
+import { orientationSupport } from '@src/common/constants'
+import Shape from '@src/common/shape'
 import { IElement, Options } from '@src/types/particle'
+import { ValueOf } from '@src/types/utility-types'
 import {
   calcQuantity,
   isElement,
@@ -11,7 +12,7 @@ import {
   randomSpeed,
 } from '@src/utils'
 
-export default class Particle extends Base<Options> {
+export default class Particle extends Shape<Options> {
   static defaultConfig: Options = {
     // 粒子个数，默认为容器宽度的 0.12 倍
     // (0, 1) 显示为容器宽度相应倍数的个数，0 & [1, +∞) 显示具体个数
@@ -197,10 +198,9 @@ export default class Particle extends Base<Options> {
         vx: randomSpeed(maxSpeed, minSpeed),
         vy: randomSpeed(maxSpeed, minSpeed),
         color: getColor(),
-
+        shape: this.getShapeData(),
         // 定义粒子在视差图层里的层数及每层的层级大小
         parallaxLayer: parallaxLayer[Math.floor(Math.random() * layerLength)],
-
         // 定义粒子视差的偏移值
         parallaxOffsetX: 0,
         parallaxOffsetY: 0,
@@ -225,13 +225,12 @@ export default class Particle extends Base<Options> {
 
     // 绘制粒子
     this.elements.forEach((dot) => {
-      const { x, y, r, parallaxOffsetX, parallaxOffsetY } = dot
-      ctx.save()
-      ctx.beginPath()
-      ctx.arc(x + parallaxOffsetX, y + parallaxOffsetY, r, 0, doublePi)
-      ctx.fillStyle = dot.color
-      ctx.fill()
-      ctx.restore()
+      const { x, y, parallaxOffsetX, parallaxOffsetY } = dot
+      this.drawShape({
+        ...dot,
+        x: x + parallaxOffsetX,
+        y: y + parallaxOffsetY,
+      })
     })
 
     // 连接粒子

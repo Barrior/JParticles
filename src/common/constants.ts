@@ -10,8 +10,17 @@ export const isRuntimeSupported = !!Object.defineProperty && !isIE8
 
 // 正则列表
 export const regExp = {
+  // 匹配任意空白
   trimAll: /\s/g,
-  http: /^(https?|\/\/)/i,
+
+  // 匹配 HTTP 协议
+  http: /^(https?:\/\/|\/\/)/i,
+
+  // 匹配 'star' 或 'star:5:0.5'
+  shapeStar: /^star(:\d+:\d+(\.\d+)?)?$/,
+
+  // 匹配 Base64 图片
+  imageBase64: /^data:image\/(png|jpe?g|gif|svg\+xml);base64,/,
 }
 
 // 公共事件名列表

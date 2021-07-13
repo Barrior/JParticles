@@ -14,18 +14,20 @@ const versionInfo = `
  */
 `
 
-const utils = path.resolve(__dirname, '../src/utils/index.ts')
 const Base = path.resolve(__dirname, '../src/common/base.ts')
 const Mask = path.resolve(__dirname, '../src/common/mask.ts')
+const Shape = path.resolve(__dirname, '../src/common/shape.ts')
 const Events = path.resolve(__dirname, '../src/common/events.ts')
 const easing = path.resolve(__dirname, '../src/common/easing.ts')
 const commonConfig = path.resolve(__dirname, '../src/common/config.ts')
+const utils = path.resolve(__dirname, '../src/utils/index.ts')
 
 const common = {
-  external: [Base, Mask, Events, utils, easing, commonConfig],
+  external: [Base, Mask, Shape, Events, utils, easing, commonConfig],
   globals: {
-    [Base]: 'JParticles.Base',
-    [Mask]: 'JParticles.Mask',
+    [Base]: 'JParticles.classes.Base',
+    [Mask]: 'JParticles.classes.Mask',
+    [Shape]: 'JParticles.classes.Shape',
     [Events]: 'JParticles.Events',
     [utils]: 'JParticles.utils',
     [easing]: 'JParticles.easing',

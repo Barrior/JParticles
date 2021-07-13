@@ -1,3 +1,4 @@
+import { ShapeData } from '../common/shape'
 import { CommonConfig } from './common-config'
 
 export interface Options extends Partial<CommonConfig> {
@@ -65,10 +66,10 @@ export interface IElement {
   vy: number
   // 粒子颜色
   color: string
-
+  // 形状数据
+  shape: ShapeData
   // 粒子在视差图层里的层数及每层的层级大小
   parallaxLayer: number
-
   // 粒子视差偏移值
   parallaxOffsetX: number
   parallaxOffsetY: number

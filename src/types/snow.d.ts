@@ -1,3 +1,4 @@
+import { ShapeData } from '../common/shape'
 import { CommonConfig } from './common-config'
 
 export interface Options extends Partial<CommonConfig> {
@@ -36,4 +37,6 @@ export interface IElement {
   color: string
   // 变换方向的时间
   swingAt: number
+  // 形状数据
+  shape: ShapeData
 }

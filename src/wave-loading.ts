@@ -1,6 +1,7 @@
 import { EVENT_NAMES_WAVE_LOADING } from '@src/common/constants'
 import easing from '@src/common/easing'
 import { CommonConfig } from '@src/types/common-config'
+import { ValueOf } from '@src/types/utility-types'
 import { InputOptions, Options } from '@src/types/wave-loading'
 import { isPlainObject, isString, merge } from '@src/utils'
 
