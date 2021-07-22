@@ -29,8 +29,13 @@ export enum EVENT_NAMES {
   RESIZE = 'RESIZE',
 }
 
-// 事件名列表
+// WaveLoading 事件名
 export enum EVENT_NAMES_WAVE_LOADING {
   PROGRESS = 'PROGRESS',
+  FINISHED = 'FINISHED',
+}
+
+// Snow 事件名
+export enum EVENT_NAMES_SNOW {
   FINISHED = 'FINISHED',
 }

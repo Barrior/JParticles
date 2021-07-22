@@ -14,6 +14,8 @@ export interface Options extends Partial<CommonConfig> {
   maxSpeed: number
   // 最小速度
   minSpeed: number
+  // 持续时间
+  duration?: number
   // 是否随机变换飘落的方向
   swing: boolean
   // 变换方向的时间间隔，单位毫秒

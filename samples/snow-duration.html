@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    [id*="instance"] .demo {
+      background: url(./img/merry_christmas.jpg) no-repeat;
+      background-size: 100% 100%;
+    }
+  </style>
+</head>
+<body>
+<div id="instance">
+  <div class="demo"></div>
+  <div class="btn-box">
+    <button class="btn btn-primary" type="button" data-open>
+      open
+    </button>
+    <button class="btn btn-danger" type="button" data-pause>
+      pause
+    </button>
+  </div>
+</div>
+
+<script src="js/event.js"></script>
+<script>
+  bind('#instance', function() {
+    const speed = 0.2
+    const r = 20
+
+    const instance = new JParticles.Snow('#instance .demo', {
+      num: 2,
+      maxR: r,
+      minR: r,
+      maxSpeed: speed,
+      minSpeed: speed,
+      shape: 'https://img10.360buyimg.com/ling/jfs/t1/180952/11/13170/68465/60e6e46fE8d8e4f15/453c2896998eda6d.png',
+      swing: false,
+      duration: 3000,
+    })
+
+    instance.onFinished(() => {
+      console.log('onFinished trigged.')
+    })
+
+    return instance
+  })
+</script>
+</body>
+</html>
