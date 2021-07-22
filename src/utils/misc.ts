@@ -6,6 +6,7 @@ import { isPlainObject } from '@src/utils/checking'
  * 2、数组合并采用替换方式，如
  *   merge({ a: [1, 2, 3] }, { a: [9, 8] }) => { a: [9, 8, 3] }
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function merge<T extends any>(...objects: any[]): T {
   const length = objects.length
   const target = objects[0] || {}

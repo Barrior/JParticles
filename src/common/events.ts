@@ -61,6 +61,7 @@ export default class Events {
    * @param eventName 事件名称
    * @param args 参数
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   trigger(eventName: string, ...args: any[]): this {
     const listeners = this.listenerMap[eventName]
     if (Array.isArray(listeners)) {

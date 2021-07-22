@@ -67,6 +67,7 @@ function generateShapeData(shape: ShapeType): ShapeData {
     }
 
     // 提示错误
+    // eslint-disable-next-line no-console
     console.warn(`Shape value of ${shape} is invalid.`)
   }
 
@@ -87,6 +88,7 @@ function generateShapeData(shape: ShapeType): ShapeData {
       }
     }
   } catch (_err) {
+    // eslint-disable-next-line no-console
     console.warn(
       'Your browser does not support [CanvasImageSource](https://developer.mozilla.org/en-US/docs/Web/API/CanvasImageSource), please upgrade it.'
     )
