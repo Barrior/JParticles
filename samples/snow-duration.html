@@ -15,6 +15,9 @@
 <div id="instance">
   <div class="demo"></div>
   <div class="btn-box">
+    <button id="restart" class="btn btn-primary" type="button">
+      fallAgain
+    </button>
     <button class="btn btn-primary" type="button" data-open>
       open
     </button>
@@ -27,6 +30,7 @@
 <script src="js/event.js"></script>
 <script>
   bind('#instance', function() {
+    const $restart = document.querySelector('#restart')
     const speed = 0.2
     const r = 20
 
@@ -43,6 +47,10 @@
 
     instance.onFinished(() => {
       console.log('onFinished trigged.')
+    })
+
+    $restart.addEventListener('click', () => {
+      instance.fallAgain()
     })
 
     return instance

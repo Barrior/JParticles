@@ -20,7 +20,10 @@ export default class Snow extends Shape<Options> {
   protected elements!: IElement[]
 
   // 下雪的开始时间
-  startTime = Date.now()
+  private startTime = Date.now()
+
+  // 当存在持续时间参数时，雪花是否全部降落
+  private isFinished = false
 
   constructor(selector: string | HTMLElement, options?: Partial<Options>) {
     super(Snow.defaultConfig, selector, options)
@@ -65,15 +68,14 @@ export default class Snow extends Shape<Options> {
 
   /**
    * 绘图
+   * 设计一种模式（解耦逻辑混杂），当触发 resize 事件调用 draw 方法时：
+   *   如果是暂停 -> 调用 elements 的重新绘制 drawShape()
+   *   如果是运动中 -> 正常逻辑，内部不考虑暂停逻辑
    */
   protected draw(): void {
     const { canvasWidth, canvasHeight, isPaused } = this
     const { maxR, swing, swingInterval, swingProbability, duration } =
       this.options
-
-    if (isPaused) {
-      return
-    }
 
     this.clearCanvasAndSetGlobalAttrs()
 
@@ -81,6 +83,12 @@ export default class Snow extends Shape<Options> {
       const { x, y, r } = snowflake
 
       this.drawShape(snowflake)
+
+      // 暂停(isPaused)且窗口改变(resize)的时候也会调用绘图方法
+      // 所以需要运动的判断需要在内部
+      if (isPaused) {
+        return
+      }
 
       snowflake.x += snowflake.vx
       snowflake.y += snowflake.vy
@@ -108,6 +116,10 @@ export default class Snow extends Shape<Options> {
       }
     })
 
+    if (isPaused) {
+      return
+    }
+
     // 当有 duration 参数时，判断持续时间是否用完
     // 没有 duration 参数时，一直可用
     const timeEnd = duration ? Date.now() - this.startTime > duration : false
@@ -120,14 +132,32 @@ export default class Snow extends Shape<Options> {
     if (this.elements.length) {
       this.requestAnimationFrame()
     } else {
+      this.isFinished = true
       this.eventEmitter.trigger(EVENT_NAMES_SNOW.FINISHED)
     }
   }
 
   /**
-   * 事件：存在持续时间时，雪花全部降落完后触发的事件
+   * 方法：当存在持续时间时，再次下雪
    */
-  onFinished(...args: Array<() => void>): this {
+  public fallAgain(): void {
+    if (
+      this.isRunningSupported &&
+      !this.isCanvasRemoved &&
+      !this.isPaused &&
+      this.isFinished
+    ) {
+      this.isFinished = false
+      this.startTime = Date.now()
+      this.createSnowflakes()
+      this.draw()
+    }
+  }
+
+  /**
+   * 事件：当存在持续时间时，雪花全部降落后触发的事件
+   */
+  public onFinished(...args: Array<() => void>): this {
     this.eventEmitter.on(EVENT_NAMES_SNOW.FINISHED, ...args)
     return this
   }
