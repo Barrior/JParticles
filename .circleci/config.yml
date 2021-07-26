@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  lint_test:
+  lint_and_test:
     docker:
       - image: cimg/node:15.1
     steps:
@@ -9,12 +9,9 @@ jobs:
       - run: yarn install
       - run: yarn lint
       - run: yarn test:unit
-      - run: yarn test:unit --coverage
-      - store_artifacts:
-          path: coverage
-          prefix: coverage
+      - run: yarn coverage:report
 
 workflows:
   CI:
     jobs:
-      - lint_test
+      - lint_and_test

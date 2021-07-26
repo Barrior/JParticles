@@ -19,7 +19,7 @@
     "test:unit-watch": "yarn test:unit --watch",
     "test:e2e": "cypress run",
     "coverage": "yarn test:unit --coverage",
-    "coverage:report": "yarn coverage --coverageReporters=text-lcov | coveralls"
+    "coverage:report": "yarn coverage && codecov"
   },
   "husky": {
     "hooks": {
@@ -47,6 +47,7 @@
     "@typescript-eslint/parser": "^4.28.2",
     "chalk": "^4.1.0",
     "chokidar": "^3.4.2",
+    "codecov": "^3.8.3",
     "copy-webpack-plugin": "^6.0.3",
     "eslint": "^7.30.0",
     "eslint-config-prettier": "^8.3.0",
