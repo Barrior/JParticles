@@ -3,6 +3,9 @@
   <a href="https://circleci.com/gh/Barrior/JParticles">
     <img src="https://circleci.com/gh/Barrior/JParticles.svg?style=shield" alt="CircleCI">
   </a>
+  <a href="https://codecov.io/gh/Barrior/JParticles">
+    <img src="https://codecov.io/gh/Barrior/JParticles/branch/master/graph/badge.svg?token=JYojJUPPMW" alt="Coverage"/>
+  </a>
   <a href="https://badge.fury.io/js/jparticles">
     <img src="https://badge.fury.io/js/jparticles.svg" alt="NPM version">
   </a>

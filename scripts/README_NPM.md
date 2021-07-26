@@ -1,4 +1,5 @@
-[![npm version](https://badge.fury.io/js/jparticles.svg)](https://badge.fury.io/js/jparticles)
+[![CircleCI](https://circleci.com/gh/Barrior/JParticles.svg?style=shield)](https://circleci.com/gh/Barrior/JParticles)
+[![codecov](https://codecov.io/gh/Barrior/JParticles/branch/master/graph/badge.svg?token=JYojJUPPMW)](https://codecov.io/gh/Barrior/JParticles)
 [![dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)](https://www.npmjs.com/package/jparticles)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Barrior/JParticles/blob/master/LICENSE)
 
