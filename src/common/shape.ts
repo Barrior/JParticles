@@ -1,7 +1,7 @@
 import Base from '@src/common/base'
 import { doublePi, regExp } from '@src/common/constants'
-import { CommonConfig } from '@src/types/common-config'
-import { ValueOf } from '@src/types/utility-types'
+import type { CommonConfig } from '@src/types/common-config'
+import type { ValueOf } from '@src/types/utility-types'
 import { isArray, isString, loadImage } from '@src/utils'
 
 const validShapeTypes = ['circle', 'triangle', 'star', 'image'] as const

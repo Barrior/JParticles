@@ -1,4 +1,4 @@
-import { CommonConfig } from './common-config'
+import type { CommonConfig } from './common-config'
 
 export interface Options extends Partial<CommonConfig> {
   // 线条数量

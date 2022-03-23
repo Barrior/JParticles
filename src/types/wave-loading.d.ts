@@ -1,4 +1,4 @@
-import { Options as WaveOptions } from './wave'
+import type { Options as WaveOptions } from './wave'
 
 export interface Options extends WaveOptions {
   // [font style][font weight][font size][font family]

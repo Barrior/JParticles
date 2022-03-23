@@ -1,11 +1,12 @@
 import { EVENT_NAMES_WAVE_LOADING } from '@src/common/constants'
 import easing from '@src/common/easing'
-import { CommonConfig } from '@src/types/common-config'
-import { ValueOf } from '@src/types/utility-types'
-import { InputOptions, Options } from '@src/types/wave-loading'
+import type { CommonConfig } from '@src/types/common-config'
+import type { ValueOf } from '@src/types/utility-types'
+import type { InputOptions, Options } from '@src/types/wave-loading'
 import { isPlainObject, isString, merge } from '@src/utils'
 
-import Wave, { ComplexOptions, PlainOptions } from './wave'
+import type { ComplexOptions, PlainOptions } from './wave'
+import Wave from './wave'
 
 const plainOptionsWL = [
   'font',

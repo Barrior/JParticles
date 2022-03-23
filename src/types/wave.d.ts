@@ -1,4 +1,4 @@
-import { CommonConfig } from './common-config'
+import type { CommonConfig } from './common-config'
 
 export interface ComOptions {
   // 是否填充背景色，设置为 false 相关值无效

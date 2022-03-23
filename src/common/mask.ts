@@ -1,5 +1,5 @@
 import Base from '@src/common/base'
-import { CommonConfig } from '@src/types/common-config'
+import type { CommonConfig } from '@src/types/common-config'
 import { isString, loadImage, upperFirst } from '@src/utils'
 
 export type modeMethodNames = 'modeNormal' | 'modeGhost'

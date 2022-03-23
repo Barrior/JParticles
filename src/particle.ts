@@ -1,7 +1,7 @@
 import { orientationSupport } from '@src/common/constants'
 import Shape from '@src/common/shape'
-import { IElement, Options } from '@src/types/particle'
-import { ValueOf } from '@src/types/utility-types'
+import type { IElement, Options } from '@src/types/particle'
+import type { ValueOf } from '@src/types/utility-types'
 import {
   calcQuantity,
   isElement,

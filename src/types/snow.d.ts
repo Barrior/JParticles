@@ -1,5 +1,5 @@
-import { ShapeData } from '../common/shape'
-import { CommonConfig } from './common-config'
+import type { ShapeData } from '../common/shape'
+import type { CommonConfig } from './common-config'
 
 export interface Options extends Partial<CommonConfig> {
   // 每次随机创建的雪花数量（最多）

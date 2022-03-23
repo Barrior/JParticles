@@ -1,5 +1,5 @@
 import Shape from '@src/common/shape'
-import { IElement, Options } from '@src/types/snow'
+import type { IElement, Options } from '@src/types/snow'
 import { randomInRange, randomSpeed } from '@src/utils'
 
 import { EVENT_NAMES_SNOW } from './common/constants'

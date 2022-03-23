@@ -1,8 +1,8 @@
 import { doublePi } from '@src/common/constants'
 import Mask from '@src/common/mask'
-import { CommonConfig } from '@src/types/common-config'
-import { ValueOf } from '@src/types/utility-types'
-import { IElement, Options, StdOptions, StrNumBool } from '@src/types/wave'
+import type { CommonConfig } from '@src/types/common-config'
+import type { ValueOf } from '@src/types/utility-types'
+import type { IElement, Options, StdOptions, StrNumBool } from '@src/types/wave'
 import {
   calcQuantity,
   isPlainObject,

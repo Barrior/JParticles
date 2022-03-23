@@ -1,5 +1,5 @@
 import Base from '@src/common/base'
-import { IElement, Options } from '@src/types/line'
+import type { IElement, Options } from '@src/types/line'
 import {
   degreesToRadians,
   offset,
