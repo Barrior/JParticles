@@ -1,24 +1,11 @@
-<h1>
-  JParticles ·
-  <a href="https://circleci.com/gh/Barrior/JParticles">
-    <img src="https://circleci.com/gh/Barrior/JParticles.svg?style=shield" alt="CircleCI">
-  </a>
-  <a href="https://codecov.io/gh/Barrior/JParticles">
-    <img src="https://codecov.io/gh/Barrior/JParticles/branch/master/graph/badge.svg?token=JYojJUPPMW" alt="Coverage"/>
-  </a>
-  <a href="https://www.npmjs.com/package/jparticles">
-    <img src="https://img.shields.io/npm/v/jparticles/latest" alt="NPM Version">
-  </a>
-  <a href="https://www.npmjs.com/package/jparticles">
-    <img src="https://img.shields.io/npm/dm/jparticles.svg" alt="NPM Download">
-  </a>
-  <a href="https://www.npmjs.com/package/jparticles">
-    <img src="https://img.shields.io/badge/dependencies-none-brightgreen.svg" alt="Dependencies">
-  </a>
-  <a href="https://github.com/Barrior/JParticles/blob/master/LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
-  </a>
-</h1>
+# JParticles
+
+[![Testing](https://github.com/Barrior/JParticles/actions/workflows/testing.yml/badge.svg?branch=master)](https://github.com/Barrior/JParticles/actions/workflows/testing.yml)
+[![Coverage](https://codecov.io/gh/Barrior/JParticles/branch/master/graph/badge.svg?token=JYojJUPPMW)](https://codecov.io/gh/Barrior/JParticles)
+[![NPM Version](https://img.shields.io/npm/v/jparticles/latest)](https://www.npmjs.com/package/jparticles)
+[![NPM Download](https://img.shields.io/npm/dm/jparticles.svg)](https://www.npmjs.com/package/jparticles)
+[![Dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)](https://www.npmjs.com/package/jparticles?activeTab=dependencies)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Barrior/JParticles/blob/master/LICENSE)
 
 > English | [中文](./README.md)
 
