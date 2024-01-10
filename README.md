@@ -6,8 +6,11 @@
   <a href="https://codecov.io/gh/Barrior/JParticles">
     <img src="https://codecov.io/gh/Barrior/JParticles/branch/master/graph/badge.svg?token=JYojJUPPMW" alt="Coverage" />
   </a>
-  <a href="https://badge.fury.io/js/jparticles">
-    <img src="https://badge.fury.io/js/jparticles.svg" alt="NPM version">
+  <a href="https://www.npmjs.com/package/jparticles">
+    <img src="https://img.shields.io/npm/v/jparticles/latest" alt="NPM Version">
+  </a>
+  <a href="https://www.npmjs.com/package/jparticles">
+    <img src="https://img.shields.io/npm/dm/jparticles.svg" alt="NPM Download">
   </a>
   <a href="https://www.npmjs.com/package/jparticles">
     <img src="https://img.shields.io/badge/dependencies-none-brightgreen.svg" alt="Dependencies">
