@@ -2,10 +2,10 @@
 
 [![Testing](https://github.com/Barrior/JParticles/actions/workflows/testing.yml/badge.svg?branch=master)](https://github.com/Barrior/JParticles/actions/workflows/testing.yml)
 [![Coverage](https://codecov.io/gh/Barrior/JParticles/branch/master/graph/badge.svg?token=JYojJUPPMW)](https://codecov.io/gh/Barrior/JParticles)
+[![Gzip Size](https://img.badgesize.io/https://unpkg.com/jparticles@3.4.0/browser/jparticles.base.js?compression=gzip)](https://unpkg.com/jparticles@3.4.0/browser/jparticles.base.js)
 [![NPM Version](https://img.shields.io/npm/v/jparticles/latest)](https://www.npmjs.com/package/jparticles)
 [![NPM Download](https://img.shields.io/npm/dm/jparticles.svg)](https://www.npmjs.com/package/jparticles)
 [![Dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)](https://www.npmjs.com/package/jparticles?activeTab=dependencies)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Barrior/JParticles/blob/master/LICENSE)
 
 > English | [中文](./README.md)
 
