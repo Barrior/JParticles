@@ -6,7 +6,6 @@
 [![NPM Version](https://img.shields.io/npm/v/jparticles/latest)](https://www.npmjs.com/package/jparticles)
 [![NPM Download](https://img.shields.io/npm/dm/jparticles.svg)](https://www.npmjs.com/package/jparticles)
 [![Dependencies](https://img.shields.io/badge/dependencies-none-brightgreen.svg)](https://www.npmjs.com/package/jparticles?activeTab=dependencies)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Barrior/JParticles/blob/master/LICENSE)
 
 > 中文 | [English](./README_en.md)
 
