@@ -56,4 +56,6 @@
 
 [MIT](./LICENSE)
 
-Copyright (c) 2016-present, Barrior Wei
+Copyright (c) 2016-present, Barrior
+
+<img src="./samples/img/wechat-praise.jpg" width="266" />

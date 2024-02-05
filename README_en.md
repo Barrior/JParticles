@@ -58,4 +58,4 @@ Detailed changes for each release are documented in the [release notes](https://
 
 [MIT](./LICENSE)
 
-Copyright (c) 2016-present, Barrior Wei
+Copyright (c) 2016-present, Barrior
