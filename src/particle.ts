@@ -63,6 +63,15 @@ export default class Particle extends Shape<Options> {
 
     // 视差强度，值越小视差效果越强烈
     parallaxStrength: 3,
+
+    // 是否自旋
+    spin: false,
+
+    // 粒子最大运动角速度(0, 360)
+    spinMaxSpeed: 5,
+
+    // 粒子最小运动角速度(0, 360)
+    spinMinSpeed: 1,
   }
 
   protected elements!: IElement[]
@@ -185,7 +194,16 @@ export default class Particle extends Shape<Options> {
    */
   private createDots(): void {
     const { canvasWidth, canvasHeight, getColor } = this
-    const { maxR, minR, maxSpeed, minSpeed, parallaxLayer } = this.options
+    const {
+      maxR,
+      minR,
+      maxSpeed,
+      minSpeed,
+      parallaxLayer,
+      spin,
+      spinMaxSpeed,
+      spinMinSpeed,
+    } = this.options
     const layerLength = parallaxLayer.length
     let { num } = this.options
 
@@ -204,6 +222,10 @@ export default class Particle extends Shape<Options> {
         // 定义粒子视差的偏移值
         parallaxOffsetX: 0,
         parallaxOffsetY: 0,
+        // 定义粒子的旋转角度
+        rotate: spin ? randomInRange(0, 360) : 0,
+        // 粒子的旋转速度
+        rotateSpeed: randomSpeed(spinMaxSpeed, spinMinSpeed),
       })
     }
   }
@@ -226,6 +248,10 @@ export default class Particle extends Shape<Options> {
     // 绘制粒子
     this.elements.forEach((dot) => {
       const { x, y, parallaxOffsetX, parallaxOffsetY } = dot
+
+      // 更新粒子旋转角度
+      this.updateElementRotate(dot)
+
       this.drawShape({
         ...dot,
         x: x + parallaxOffsetX,
@@ -238,6 +264,23 @@ export default class Particle extends Shape<Options> {
 
     // 循环绘制
     this.requestAnimationFrame()
+  }
+
+  /**
+   * 更新元素自旋数据
+   */
+  private updateElementRotate(element: IElement) {
+    if (!this.options.spin || this.isPaused) {
+      return
+    }
+
+    // 更新旋转角度
+    element.rotate += element.rotateSpeed
+
+    // 大于等于 360 度时，回到 0-360 范围，避免变量数值一直累计超过 MAX_SAFE_INTEGER
+    if (element.rotate >= 360) {
+      element.rotate = element.rotate - 360
+    }
   }
 
   /**

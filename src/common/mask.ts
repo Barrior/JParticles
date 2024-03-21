@@ -6,12 +6,12 @@ export type modeMethodNames = 'modeNormal' | 'modeGhost'
 
 export default abstract class Mask<Options> extends Base<Options> {
   // 遮罩图像对象
-  protected maskImage?: CanvasImageSource
+  protected maskImage?: ICanvasImageSource
 
   // 扩展 mask 相关属性
   protected readonly options!: Options &
     CommonConfig & {
-      mask?: string | CanvasImageSource
+      mask?: string | ICanvasImageSource
       maskMode?: 'normal' | 'ghost'
     }
 
@@ -41,7 +41,7 @@ export default abstract class Mask<Options> extends Base<Options> {
         this.maskImage = image
       })
     } else {
-      this.maskImage = mask as CanvasImageSource
+      this.maskImage = mask as ICanvasImageSource
     }
   }
 

@@ -21,42 +21,25 @@
   </div>
 </div>
 
-<div id="instance2">
-  <div class="demo"></div>
-  <div class="btn-box">
-    <button class="btn btn-primary" type="button" data-open>
-      open
-    </button>
-    <button class="btn btn-danger" type="button" data-pause>
-      pause
-    </button>
-  </div>
-</div>
-
 <script src="js/event.js"></script>
 <script>
   bind('#instance1', function() {
     return new JParticles.Particle('#instance1 .demo', {
-      num: 100,
+      num: 50,
       maxR: 30,
       minR: 30,
+      range: 0,
+      // 是否自旋
+      spin: true,
+      // 粒子形状
       shape: [
-        'circle', 'triangle', 'star', 'star:4:0.5', 'star:30:0.5',
+        'circle',
+        'triangle',
+        'star',
+        'star:4:0.5',
+        'star:30:0.5',
         'https://raw.githubusercontent.com/Barrior/assets/main/smiling-face.gif'
       ],
-    })
-  })
-
-  bind('#instance2', function() {
-    return new JParticles.Particle('#instance2 .demo', {
-      // range为0，不连接线
-      range: 0,
-      num: 6,
-      maxR: 60,
-      minR: 60,
-      maxSpeed: 3,
-      minSpeed: 1,
-      shape: 'https://img13.360buyimg.com/ling/jfs/t1/180868/9/13865/158167/60ecf424E4af1ab15/edcc6d7cc9904efd.png'
     })
   })
 </script>

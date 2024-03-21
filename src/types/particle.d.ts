@@ -51,6 +51,15 @@ export interface Options extends Partial<CommonConfig> {
 
   // 视差强度，值越小视差效果越强烈
   parallaxStrength: number
+
+  // 粒子是否自旋
+  spin: boolean
+
+  // 粒子最大运动角速度(0, 360)
+  spinMaxSpeed: number
+
+  // 粒子最小运动角速度(0, 360)
+  spinMinSpeed: number
 }
 
 export interface IElement {
@@ -64,6 +73,10 @@ export interface IElement {
   vx: number
   // 每次绘制时，粒子在 y 轴方向的步进值，正负值
   vy: number
+  // 粒子的旋转角度
+  rotate: number
+  // 粒子的旋转速度
+  rotateSpeed: number
   // 粒子颜色
   color: string
   // 形状数据

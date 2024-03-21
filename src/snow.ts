@@ -15,6 +15,9 @@ export default class Snow extends Shape<Options> {
     swing: true,
     swingInterval: 2000,
     swingProbability: 0.06,
+    spin: false,
+    spinMaxSpeed: 5,
+    spinMinSpeed: 1,
   }
 
   protected elements!: IElement[]
@@ -41,8 +44,17 @@ export default class Snow extends Shape<Options> {
    * 创建单个雪花，包含大小、位置、速度等信息
    */
   private createSnowflake(): IElement {
-    const { maxR, minR, maxSpeed, minSpeed } = this.options
+    const {
+      maxR,
+      minR,
+      maxSpeed,
+      minSpeed,
+      spin,
+      spinMaxSpeed,
+      spinMinSpeed,
+    } = this.options
     const r = randomInRange(maxR, minR)
+
     return {
       r,
       x: Math.random() * this.canvasWidth,
@@ -53,6 +65,10 @@ export default class Snow extends Shape<Options> {
       color: this.getColor(),
       swingAt: Date.now(),
       shape: this.getShapeData(),
+      // 定义粒子的旋转角度
+      rotate: spin ? randomInRange(0, 360) : 0,
+      // 粒子的旋转速度
+      rotateSpeed: randomSpeed(spinMaxSpeed, spinMinSpeed),
     }
   }
 
@@ -74,13 +90,21 @@ export default class Snow extends Shape<Options> {
    */
   protected draw(): void {
     const { canvasWidth, canvasHeight, isPaused } = this
-    const { maxR, swing, swingInterval, swingProbability, duration } =
-      this.options
+    const {
+      maxR,
+      swing,
+      swingInterval,
+      swingProbability,
+      duration,
+    } = this.options
 
     this.clearCanvasAndSetGlobalAttrs()
 
     this.elements.forEach((snowflake, i, array) => {
       const { x, y, r } = snowflake
+
+      // 更新旋转角度
+      this.updateElementRotate(snowflake)
 
       this.drawShape(snowflake)
 
@@ -134,6 +158,23 @@ export default class Snow extends Shape<Options> {
     } else {
       this.isFinished = true
       this.eventEmitter.trigger(EVENT_NAMES_SNOW.FINISHED)
+    }
+  }
+
+  /**
+   * 更新元素自旋数据
+   */
+  private updateElementRotate(element: IElement) {
+    if (!this.options.spin || this.isPaused) {
+      return
+    }
+
+    // 更新旋转角度
+    element.rotate += element.rotateSpeed
+
+    // 大于等于 360 度时，回到 0-360 范围，避免变量数值一直累计超过 MAX_SAFE_INTEGER
+    if (element.rotate >= 360) {
+      element.rotate = element.rotate - 360
     }
   }
 

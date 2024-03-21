@@ -22,6 +22,12 @@ export interface Options extends Partial<CommonConfig> {
   swingInterval: number
   // 变换方向的概率（达到时间间隔后），取值范围 [0, 1]
   swingProbability: number
+  // 雪花是否自旋
+  spin: boolean
+  // 雪花最大运动角速度(0, 360)
+  spinMaxSpeed: number
+  // 雪花最小运动角速度(0, 360)
+  spinMinSpeed: number
 }
 
 export interface IElement {
@@ -41,4 +47,8 @@ export interface IElement {
   swingAt: number
   // 形状数据
   shape: ShapeData
+  // 旋转角度
+  rotate: number
+  // 旋转速度
+  rotateSpeed: number
 }

@@ -1,5 +1,5 @@
 import Base from '@src/common/base'
-import { doublePi, regExp } from '@src/common/constants'
+import { doublePi, piBy180, regExp } from '@src/common/constants'
 import type { CommonConfig } from '@src/types/common-config'
 import type { ValueOf } from '@src/types/utility-types'
 import { isArray, isString, loadImage } from '@src/utils'
@@ -12,13 +12,13 @@ export type NormalShapeType = Exclude<ValueOf<typeof validShapeTypes>, 'image'>
 //   1. `star:[边数][凹值]`, 示例：`star:5:0.5`, 表示五角星
 //   2. 图片 HTTP 地址，示例：`https://xxx.com/a.jpg`
 //   3. 图片 Base64 格式，示例：`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA`
-export type ShapeType = NormalShapeType | string | CanvasImageSource
+export type ShapeType = NormalShapeType | string | ICanvasImageSource
 
 export interface ShapeData {
   // 形状类型
   type: ValueOf<typeof validShapeTypes>
   // 当为图片类型时，图片加载完毕的源文件
-  source?: CanvasImageSource
+  source?: ICanvasImageSource
   // 当为图片类型时，图片是否加载完毕
   isImageLoaded?: boolean
   // 当为 star 类型时，星形的边数
@@ -75,7 +75,6 @@ function generateShapeData(shape: ShapeType): ShapeData {
     // 处理 CanvasImageSource 类型
     if (
       shape instanceof HTMLImageElement ||
-      shape instanceof SVGImageElement ||
       shape instanceof HTMLVideoElement ||
       shape instanceof HTMLCanvasElement ||
       shape instanceof ImageBitmap ||
@@ -174,6 +173,7 @@ export default abstract class Shape<Options> extends Base<Options> {
     r: number
     color: string
     shape: ShapeData
+    rotate: number
   }): void {
     const { type, isImageLoaded, source, sides, dent } = data.shape
 
@@ -181,38 +181,43 @@ export default abstract class Shape<Options> extends Base<Options> {
       return
     }
 
+    if (type === 'image' && (!isImageLoaded || !source)) {
+      return
+    }
+
     this.ctx.save()
 
+    // 旋转渲染
+    this.ctx.translate(data.x, data.y)
+    this.ctx.rotate(data.rotate * piBy180)
+
     if (type === 'image') {
-      if (isImageLoaded) {
-        const width = data.r * 2
-        this.ctx.drawImage(
-          source!,
-          0,
-          0,
-          (source?.width as number) || width,
-          (source?.height as number) || width,
-          data.x - data.r,
-          data.y - data.r,
-          width,
-          width
-        )
-      }
+      const width = data.r * 2
+      this.ctx.drawImage(
+        source!,
+        0,
+        0,
+        source!.width || width,
+        source!.height || width,
+        -data.r,
+        -data.r,
+        width,
+        width
+      )
     } else {
       this.ctx.beginPath()
 
       switch (data.shape.type) {
         case 'circle':
-          this.ctx.arc(data.x, data.y, data.r, 0, doublePi)
+          this.ctx.arc(0, 0, data.r, 0, doublePi)
           break
         case 'triangle':
-          drawStar(this.ctx, data.x, data.y, data.r, 3, 0.5)
+          drawStar(this.ctx, 0, 0, data.r, 3, 0.5)
           break
         case 'star':
-          drawStar(this.ctx, data.x, data.y, data.r, sides!, dent!)
+          drawStar(this.ctx, 0, 0, data.r, sides!, dent!)
           break
       }
-
       this.ctx.fillStyle = data.color
       this.ctx.fill()
     }
