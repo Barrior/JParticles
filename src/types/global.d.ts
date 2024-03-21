@@ -11,8 +11,3 @@ interface Window {
   mozRequestAnimationFrame?: AnimationFrameProvider['requestAnimationFrame']
   WebKitMutationObserver?: MutationObserver
 }
-
-/**
- * 排除没有 width 和 height 属性的元素
- */
-type ICanvasImageSource = Exclude<CanvasImageSource, SVGImageElement>

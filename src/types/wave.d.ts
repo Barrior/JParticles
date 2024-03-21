@@ -1,4 +1,5 @@
 import type { CommonConfig } from './common-config'
+import type { ICanvasImageSource } from './utility-types'
 
 export interface ComOptions {
   // 是否填充背景色，设置为 false 相关值无效

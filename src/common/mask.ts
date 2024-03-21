@@ -1,5 +1,6 @@
 import Base from '@src/common/base'
 import type { CommonConfig } from '@src/types/common-config'
+import type { ICanvasImageSource } from '@src/types/utility-types'
 import { isString, loadImage, upperFirst } from '@src/utils'
 
 export type modeMethodNames = 'modeNormal' | 'modeGhost'
