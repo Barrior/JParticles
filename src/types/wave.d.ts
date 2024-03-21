@@ -34,7 +34,7 @@ export interface ComOptions {
   speed: number | number[]
 
   // 遮罩：图片 URL 地址、 Base64 格式、canvas 图像源
-  mask?: string | CanvasImageSource
+  mask?: string | ICanvasImageSource
 
   // 遮罩模式，默认 normal
   maskMode?: 'normal' | 'ghost'
