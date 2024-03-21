@@ -44,15 +44,8 @@ export default class Snow extends Shape<Options> {
    * 创建单个雪花，包含大小、位置、速度等信息
    */
   private createSnowflake(): IElement {
-    const {
-      maxR,
-      minR,
-      maxSpeed,
-      minSpeed,
-      spin,
-      spinMaxSpeed,
-      spinMinSpeed,
-    } = this.options
+    const { maxR, minR, maxSpeed, minSpeed, spin, spinMaxSpeed, spinMinSpeed } =
+      this.options
     const r = randomInRange(maxR, minR)
 
     return {
@@ -90,13 +83,8 @@ export default class Snow extends Shape<Options> {
    */
   protected draw(): void {
     const { canvasWidth, canvasHeight, isPaused } = this
-    const {
-      maxR,
-      swing,
-      swingInterval,
-      swingProbability,
-      duration,
-    } = this.options
+    const { maxR, swing, swingInterval, swingProbability, duration } =
+      this.options
 
     this.clearCanvasAndSetGlobalAttrs()
 
